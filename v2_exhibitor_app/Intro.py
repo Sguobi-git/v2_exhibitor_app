@@ -105,8 +105,10 @@ if st.session_state.navigate_to_home:
 
 # HTML with embedded video and top-left logo
 html_code = f"""
+
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
 body {{
     margin: 0;
     padding: 0;
@@ -153,9 +155,31 @@ video {{
 .logo {{
     width: 50vw;
     max-width: 300px;
+    display: block;
+    margin-bottom: 2vw;
 }}
 
-/* Responsive adjustments */
+/* Landscape orientation adjustments */
+@media screen and (orientation: landscape) and (max-width: 768px) {{
+    .top-left-container {{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }}
+
+    .logo {{
+        width: 40vw;
+        margin-bottom: 1vw;
+    }}
+
+    .stButton > button {{
+        margin-top: 1vw;
+        font-size: 1rem;
+        padding: 8px 20px;
+    }}
+}}
+
+/* General responsiveness */
 @media (max-width: 768px) {{
     .welcome-text {{
         font-size: 5vw;
@@ -178,6 +202,8 @@ video {{
     }}
 }}
 </style>
+
+
 <div class="video-container">
     <video autoplay loop muted playsinline>
         <source src="data:video/mp4;base64,{video_base64}" type="video/mp4">
