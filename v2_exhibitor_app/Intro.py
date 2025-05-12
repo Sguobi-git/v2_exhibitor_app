@@ -9,6 +9,19 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+
+st.markdown("""
+    <style>
+    :root {{
+        color-scheme: only light;
+    }}
+    html, body {{
+        background-color: white !important;
+        color: black !important;
+    }}
+    </style>
+""", unsafe_allow_html=True)
+
 # Hide Streamlit components and make truly full screen
 hide_streamlit_style = """
 <style>
