@@ -427,7 +427,7 @@ def show_confirmation():
 <canvas id="fireworks-canvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
 
 <script>
-// React ConfirmationAnimation
+// Confirmation Animation (unchanged)
 function ConfirmationAnimation() {
     const [currentMessage, setCurrentMessage] = React.useState(0);
     const [fade, setFade] = React.useState(true);
@@ -456,8 +456,12 @@ function ConfirmationAnimation() {
         React.createElement(
             'div',
             {
-                className: `font-bold text-blue-500 transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
-                style: { fontSize: '1.375rem', transition: 'opacity 1s ease' }
+                className: `font-bold transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
+                style: {
+                    color: '#333', // streamlit standard dark-on-light text
+                    fontSize: '1.375rem',
+                    transition: 'opacity 1s ease'
+                }
             },
             messages[currentMessage]
         )
@@ -469,7 +473,7 @@ ReactDOM.render(React.createElement(ConfirmationAnimation), domContainer);
 </script>
 
 <script>
-// Fireworks animation
+// Light-style fireworks
 const canvas = document.getElementById('fireworks-canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -484,99 +488,57 @@ function random(min, max) {
     return Math.random() * (max - min) + min;
 }
 
-class Firework {
-    constructor() {
-        this.reset();
-    }
-
-    reset() {
-        this.x = canvas.width / 2;
-        this.y = canvas.height;
-        this.tx = random(0, canvas.width);
-        this.ty = random(0, canvas.height / 2);
-        this.trail = [];
-        this.hue = random(0, 360);
-        this.speed = 2;
-        this.alpha = 1;
-        this.done = false;
-    }
-
-    update() {
-        const dx = this.tx - this.x;
-        const dy = this.ty - this.y;
-        this.x += dx * 0.05;
-        this.y += dy * 0.05;
-
-        this.trail.push({ x: this.x, y: this.y });
-        if (this.trail.length > 10) this.trail.shift();
-
-        if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
-            this.done = true;
-            for (let i = 0; i < 30; i++) particles.push(new Particle(this.tx, this.ty, this.hue));
-        }
-    }
-
-    draw() {
-        ctx.beginPath();
-        ctx.moveTo(this.x, this.y);
-        ctx.lineTo(this.tx, this.ty);
-        ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;
-        ctx.stroke();
-    }
-}
-
 class Particle {
-    constructor(x, y, hue) {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.hue = hue;
-        this.alpha = 1;
-        this.radius = random(2, 4);
         this.angle = random(0, Math.PI * 2);
-        this.speed = random(1, 6);
+        this.speed = random(1, 4);
+        this.radius = random(1, 2.5);
+        this.alpha = 1;
         this.gravity = 0.05;
+        this.color = `rgba(220, 220, 220, ${this.alpha})`; // light greyish white
     }
 
     update() {
         this.x += Math.cos(this.angle) * this.speed;
         this.y += Math.sin(this.angle) * this.speed + this.gravity;
-        this.alpha -= 0.02;
+        this.alpha -= 0.015;
+        this.color = `rgba(220, 220, 220, ${this.alpha})`;
     }
 
     draw() {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${this.hue}, 100%, 50%, ${this.alpha})`;
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
         ctx.fill();
     }
 }
 
-let fireworks = [];
 let particles = [];
+
+function spawnFirework() {
+    const x = random(canvas.width * 0.2, canvas.width * 0.8);
+    const y = random(canvas.height * 0.1, canvas.height * 0.5);
+    for (let i = 0; i < 25; i++) {
+        particles.push(new Particle(x, y));
+    }
+}
 
 function animate() {
     requestAnimationFrame(animate);
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    if (Math.random() < 0.05) fireworks.push(new Firework());
-
-    fireworks = fireworks.filter(f => !f.done);
-    particles = particles.filter(p => p.alpha > 0);
-
-    fireworks.forEach(fw => {
-        fw.update();
-        fw.draw();
-    });
-
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    spawnFirework();
     particles.forEach(p => {
         p.update();
         p.draw();
     });
+    particles = particles.filter(p => p.alpha > 0);
 }
 
 animate();
 </script>
+
 
 
 
