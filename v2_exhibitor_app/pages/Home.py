@@ -686,13 +686,13 @@ def show_confirmation():
         }, [currentMessage]);
 
         return React.createElement(
-            'div', 
+            'div',
             { className: 'flex flex-col items-center justify-center w-full py-8' },
             React.createElement(
-                'div', 
-                { 
-                    className: `text-1.5xl font-bold text-blue-500 transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
-                    style: { transition: 'opacity 1s ease' }
+                'div',
+                {
+                    className: `font-bold text-blue-500 transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
+                    style: { fontSize: '1.375rem', transition: 'opacity 1s ease' } // 22px
                 },
                 messages[currentMessage]
             )
@@ -701,7 +701,8 @@ def show_confirmation():
 
     const domContainer = document.querySelector('#confirmation-animation-root');
     ReactDOM.render(React.createElement(ConfirmationAnimation), domContainer);
-    </script>
+</script>
+
     """, height=200)
         
     # Navigation buttons
