@@ -10,21 +10,6 @@ st.set_page_config(
 )
 
 
-st.markdown("""
-    <style>
-    html, body, .stApp, div, span, header, footer, section {
-        background-color: white !important;
-        color: black !important;
-    }
-    ::placeholder {
-        color: black !important;
-    }
-    * {
-        color-scheme: only light;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
 # Hide Streamlit components and make truly full screen
 hide_streamlit_style = """
 <style>
