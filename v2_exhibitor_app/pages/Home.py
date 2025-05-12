@@ -458,7 +458,7 @@ function ConfirmationAnimation() {
             {
                 className: `font-bold transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
                 style: {
-                    color: '#333', // streamlit standard dark-on-light text
+                    color: '#333',
                     fontSize: '1.375rem',
                     transition: 'opacity 1s ease'
                 }
@@ -473,7 +473,7 @@ ReactDOM.render(React.createElement(ConfirmationAnimation), domContainer);
 </script>
 
 <script>
-// Light-style fireworks
+// Light-style multicolored fireworks
 const canvas = document.getElementById('fireworks-canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -497,14 +497,18 @@ class Particle {
         this.radius = random(1, 2.5);
         this.alpha = 1;
         this.gravity = 0.05;
-        this.color = `rgba(220, 220, 220, ${this.alpha})`; // light greyish white
+
+        const hue = Math.floor(random(0, 360));
+        this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`; // pastel tones
     }
 
     update() {
         this.x += Math.cos(this.angle) * this.speed;
         this.y += Math.sin(this.angle) * this.speed + this.gravity;
         this.alpha -= 0.015;
-        this.color = `rgba(220, 220, 220, ${this.alpha})`;
+        const hueMatch = this.color.match(/hsla\((\d+),/);
+        const hue = hueMatch ? hueMatch[1] : 0;
+        this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`;
     }
 
     draw() {
@@ -538,6 +542,7 @@ function animate() {
 
 animate();
 </script>
+
 
 
 
