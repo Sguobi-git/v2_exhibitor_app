@@ -692,7 +692,7 @@ def show_confirmation():
                 'div',
                 {
                     className: `font-bold text-blue-500 transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
-                    style: { fontSize: '1.375rem', transition: 'opacity 1s ease' } // 22px
+                    style: { fontSize: '1.300rem', transition: 'opacity 1s ease' } // 22px
                 },
                 messages[currentMessage]
             )
