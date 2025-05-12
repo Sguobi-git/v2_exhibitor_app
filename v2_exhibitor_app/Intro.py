@@ -12,13 +12,16 @@ st.set_page_config(
 
 st.markdown("""
     <style>
-    :root {{
-        color-scheme: only light;
-    }}
-    html, body {{
+    html, body, .stApp, div, span, header, footer, section {
         background-color: white !important;
         color: black !important;
-    }}
+    }
+    ::placeholder {
+        color: black !important;
+    }
+    * {
+        color-scheme: only light;
+    }
     </style>
 """, unsafe_allow_html=True)
 
