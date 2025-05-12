@@ -691,7 +691,7 @@ def show_confirmation():
             React.createElement(
                 'div', 
                 { 
-                    className: `text-1xl font-bold text-blue-500 transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
+                    className: `text-1.5xl font-bold text-blue-500 transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
                     style: { transition: 'opacity 1s ease' }
                 },
                 messages[currentMessage]
