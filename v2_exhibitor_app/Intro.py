@@ -115,6 +115,7 @@ body {{
     width: 100vw;
     height: 100vh;
 }}
+
 .video-container {{
     position: absolute;
     top: 0;
@@ -123,30 +124,58 @@ body {{
     height: 100vh;
     overflow: hidden;
 }}
+
 video {{
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     object-fit: cover;
 }}
+
 .top-left-container {{
     position: absolute;
-    top: 30px;
-    left: 30px;
+    top: 5vw;
+    left: 5vw;
     z-index: 20;
     text-align: left;
     color: white;
 }}
+
 .welcome-text {{
-    font-size: 1.2rem;
+    font-size: 3vw;
     color: white;
-    margin-bottom: 8px;
-    letter-spacing: 2px;
+    margin-bottom: 1vw;
+    letter-spacing: 1px;
 }}
+
 .logo {{
-    width: 450px;
+    width: 50vw;
+    max-width: 300px;
+}}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {{
+    .welcome-text {{
+        font-size: 5vw;
+    }}
+
+    .logo {{
+        width: 70vw;
+        max-width: 250px;
+    }}
+
+    .stButton > button {{
+        font-size: 1rem;
+        padding: 10px 25px;
+    }}
+}}
+
+@media (max-width: 480px) {{
+    .logo {{
+        width: 80vw;
+    }}
 }}
 </style>
 <div class="video-container">
