@@ -17,6 +17,29 @@ st.set_page_config(
 )
 
 
+# Write some custom CSS to disable dark mode and avoid the white layout issue
+st.markdown(
+    """
+    <style>
+    /* Force light mode on the entire page */
+    @media (prefers-color-scheme: dark) {
+        html {
+            color-scheme: light !important;
+            background-color: #ffffff !important;
+        }
+    }
+
+    /* Make sure the background and layout are unaffected by dark mode */
+    body {
+        background-color: #f0f2f6 !important; /* Streamlit's default light background color */
+        color: #333333 !important;  /* Default text color */
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+
 # Apply custom CSS for a more vibrant, friendly UI
 st.markdown("""
 <style>
