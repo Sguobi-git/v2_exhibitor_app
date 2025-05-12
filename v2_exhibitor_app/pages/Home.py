@@ -17,83 +17,105 @@ st.set_page_config(
 )
 
 
-# Write some custom CSS to disable dark mode and avoid the white layout issue
-st.markdown(
-    """
-    <style>
-    /* Force light mode on the entire page */
-    @media (prefers-color-scheme: dark) {
-        html {
-            color-scheme: light !important;
-            background-color: #ffffff !important;
-        }
-    }
-
-    /* Make sure the background and layout are unaffected by dark mode */
-    body {
-        background-color: #f0f2f6 !important; /* Streamlit's default light background color */
-        color: #333333 !important;  /* Default text color */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-
-# Apply custom CSS for a more vibrant, friendly UI
+# Apply custom CSS to force light mode and prevent browser dark mode override
 st.markdown("""
 <style>
-    /* More friendly colors and styles */
-    .main { 
-        background-color: #f8f9fa;
+    /* Force light mode regardless of browser settings */
+    :root {
+        --background-color: #f8f9fa !important;
+        --secondary-background-color: #ffffff !important;
+        --text-color: #2c3e50 !important;
+        --font: "Source Sans Pro", sans-serif !important;
     }
-    h1, h2, h3 {
-        color: #2c3e50;
+    
+    /* Override Streamlit's auto dark mode detection */
+    [data-testid="stAppViewContainer"], 
+    [data-testid="stHeader"],
+    [data-testid="stToolbar"],
+    [data-testid="stSidebar"],
+    .stApp {
+        background-color: #f8f9fa !important;
+        color: #2c3e50 !important;
     }
+    
+    /* Make sure text remains dark */
+    p, h1, h2, h3, span, label, .stTextInput > label, .stSelectbox > label {
+        color: #2c3e50 !important;
+    }
+    
+    /* Ensure input fields have proper contrast */
+    .stTextInput > div > div > input, .stSelectbox > div > div > div {
+        background-color: white !important;
+        color: #2c3e50 !important;
+        border: 1px solid #e0e0e0 !important;
+    }
+    
+    /* Button styling */
     .stButton button {
-        background-color: #3498db;
-        color: white;
-        border-radius: 10px;
-        transition: all 0.3s ease;
+        background-color: #3498db !important;
+        color: white !important;
+        border-radius: 10px !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
     }
     .stButton button:hover {
-        background-color: #2980b9;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: #2980b9 !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
     }
+    
     /* Card styling */
     .card {
-        border-radius: 15px;
-        padding: 1.5rem;
-        background: white;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        margin-bottom: 1rem;
-        transition: all 0.3s ease;
+        border-radius: 15px !important;
+        padding: 1.5rem !important;
+        background: white !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+        margin-bottom: 1rem !important;
+        transition: all 0.3s ease !important;
     }
     .card:hover {
-        box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-        transform: translateY(-3px);
+        box-shadow: 0 6px 14px rgba(0,0,0,0.1) !important;
+        transform: translateY(-3px) !important;
     }
+    
     /* Status indicators */
     .status-delivered {
-        color: #27ae60;
-        font-weight: bold;
+        color: #27ae60 !important;
+        font-weight: bold !important;
     }
     .status-in-progress {
-        color: #f39c12;
-        font-weight: bold;
+        color: #f39c12 !important;
+        font-weight: bold !important;
     }
     .status-not-started {
-        color: #e74c3c;
-        font-weight: bold;
+        color: #e74c3c !important;
+        font-weight: bold !important;
     }
-    /* Enhancing selection dropdowns */
-    .stSelectbox label, .stTextInput label {
-        color: #3498db;
-        font-weight: 600;
+    
+    /* Sidebar styling */
+    [data-testid="stSidebar"] {
+        background-color: #ffffff !important;
+        border-right: 1px solid #e0e0e0 !important;
+    }
+    
+    /* Make sure dropdown menus are visible */
+    .stSelectbox > div > div > ul {
+        background-color: white !important;
+        color: #2c3e50 !important;
+    }
+    
+    /* Tab styling */
+    button[data-baseweb="tab"] {
+        background-color: #f0f0f0 !important;
+        color: #2c3e50 !important;
+    }
+    button[data-baseweb="tab"][aria-selected="true"] {
+        background-color: #3498db !important;
+        color: white !important;
     }
 </style>
 """, unsafe_allow_html=True)
+
 
 # Initialize the Google Sheets manager
 gs_manager = GoogleSheetsManager()
