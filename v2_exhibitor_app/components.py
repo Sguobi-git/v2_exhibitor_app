@@ -29,27 +29,6 @@ def create_landing_animation():
 """, unsafe_allow_html=True)
 
 
-
-    # """Create a welcoming animation for the landing page"""
-    # st.markdown("""
-    # <div style="text-align: center; margin-bottom: 2rem;">
-    #     <img src="S:\Work (Souhail)\Archive\Exhibitor Version\expo-app//assets\logo.PNG" 
-    #          alt="Expo Convention Contractors Logo" 
-    #          style="width: 80%; max-width: 400px; margin-bottom: 1rem;">
-        
-    #     <div style="font-size: 1.5rem; color: #3498db; animation: fadeIn 2s;">
-    #         Welcome to Your Exhibitor Portal
-    #     </div>
-    # </div>
-    
-    # <style>
-    # @keyframes fadeIn {
-    #     from { opacity: 0; }
-    #     to { opacity: 1; }
-    # }
-    # </style>
-    # """, unsafe_allow_html=True)
-
 def create_card_layout(order):
     """
     Create a card layout for a single order
@@ -77,7 +56,7 @@ def create_card_layout(order):
     
     status_emoji, status_class = status_mapping.get(status, ('⚪', ''))
     
-    # Create the card with HTML/CSS
+    # Create the card with HTML/CSS - now with a full-width design
     st.markdown(f"""
     <div class="card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
@@ -92,14 +71,9 @@ def create_card_layout(order):
     </div>
     """, unsafe_allow_html=True)
     
-    # Add buttons for order actions
+    # Add buttons for order actions - now full width
     col1 = st.columns(1)[0]
     
-    # with col1:
-    #     if st.button("View Details", key=f"details_{order_id}", use_container_width=True):
-    #         # In a real application, this would display more order details
-    #         st.info("Order details functionality would be implemented here.")
-
     with col1:
         # Check if this is a "delivered" type of status
         delivered_statuses = ['Delivered', 'Received']
@@ -123,73 +97,6 @@ def create_card_layout(order):
             </div>
             """, unsafe_allow_html=True)
 
-    
-    # with col2:
-    #     # Check if this is a "delivered" type of status
-    #     delivered_statuses = ['Delivered', 'Received']
-    #     is_delivered = status in delivered_statuses
-
-    #     # Only show animation button for orders that are not delivered
-    #     if not is_delivered:
-    #         if st.button("View Progress", key=f"anim_{order_id}", use_container_width=True):
-    #             # Store the order in session state and show the confirmation screen
-    #             st.session_state.last_order = order
-    #             st.session_state.show_confirmation = True
-    #             st.rerun()
-    #     else:
-    #         # Show a disabled button or alternative for delivered orders
-    #         st.markdown("""
-    #         <div style="width: 100%; text-align: center;">
-    #             <button style="width: 100%; background-color: #e2e8f0; color: #718096; 
-    #                           border-radius: 10px; padding: 0.5rem; cursor: not-allowed;">
-    #                 Order Complete
-    #             </button>
-    #         </div>
-    #         """, unsafe_allow_html=True)
-
-
-    # """
-    # Create a card layout for a single order
-    
-    # Args:
-    #     order (pd.Series): A row from the orders dataframe
-    # """
-    # # Get the order details with fallbacks for missing data
-    # item = order.get('Item', 'Unknown Item')
-    # quantity = order.get('Quantity', '1')
-    # status = order.get('Status', 'In Process')
-    # date = order.get('Date', datetime.now().strftime('%Y-%m-%d'))
-    
-    # # Map status to emoji and CSS class
-    # status_mapping = {
-    #     'Delivered': ('🟢', 'status-delivered'),
-    #     'In route from warehouse': ('🟠', 'status-in-progress'),
-    #     'In Process': ('🟠', 'status-in-progress'),
-    #     'Out for delivery': ('🟠', 'status-in-progress'),
-    #     'Received': ('🟢', 'status-delivered'),
-    #     'Not started': ('🔴', 'status-not-started'),
-    #     'cancelled': ('⚫', 'status-not-started')
-    # }
-    
-    # status_emoji, status_class = status_mapping.get(status, ('⚪', ''))
-    
-    # # Create the card with HTML/CSS
-    # st.markdown(f"""
-    # <div class="card">
-    #     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-    #         <h3 style="margin: 0;">{item}</h3>
-    #         <span class="{status_class}">{status_emoji} {status}</span>
-    #     </div>
-    #     <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
-    #         <div><strong>Quantity:</strong> {quantity}</div>
-    #         <div><strong>Date:</strong> {date}</div>
-    #     </div>
-        
-    #     {f'<div><strong>Comments:</strong> {order.get("Comments", "")}</div>' if order.get('Comments') else ''}
-        
-    #     {f'<div><strong>Color:</strong> {order.get("Color", "")}</div>' if order.get('Color') else ''}
-    # </div>
-    # """, unsafe_allow_html=True)
 
 def create_confirmation_animation(container):
     """
