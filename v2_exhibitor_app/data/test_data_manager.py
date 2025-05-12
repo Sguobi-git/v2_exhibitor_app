@@ -108,7 +108,7 @@ class GoogleSheetsManager:
             df = df.dropna(how='all').reset_index(drop=True)
             return df
         except Exception as e:
-            st.error(f"Erreur lors de la récupération des données: {e}")
+            # st.error(f"Erreur lors de la récupération des données: {e}")
             return pd.DataFrame()
     
     def update_order_status(self, sheet_id, worksheet, booth_num, item_name, color, status, user):
