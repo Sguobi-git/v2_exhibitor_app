@@ -458,7 +458,7 @@ function ConfirmationAnimation() {
             {
                 className: `font-bold transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
                 style: {
-                    color: '#2980b9',
+                    color: '#2e9de6',
                     fontSize: '1.200rem',
                     transition: 'opacity 1s ease'
                 }
