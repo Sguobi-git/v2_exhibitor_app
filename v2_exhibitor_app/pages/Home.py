@@ -17,21 +17,6 @@ st.set_page_config(
 )
 
 
-st.markdown("""
-    <style>
-    html, body, .stApp, div, span, header, footer, section {
-        background-color: white !important;
-        color: black !important;
-    }
-    ::placeholder {
-        color: black !important;
-    }
-    * {
-        color-scheme: only light;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
 # Apply custom CSS for a more vibrant, friendly UI
 st.markdown("""
 <style>
