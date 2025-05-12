@@ -190,10 +190,12 @@ video {{
 </div>
 """
 
+
+
 # Display the HTML (video and logo)
 st.components.v1.html(html_code, height=1000, scrolling=False)
 
 # Add the centrally positioned button
 # This button will be positioned by CSS
-if st.button("START MAGIC WITH EXPO", on_click=set_navigate_to_home, key="enter_button"):
+if st.button("Let's show off together", on_click=set_navigate_to_home, key="enter_button"):
     pass
