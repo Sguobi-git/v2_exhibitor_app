@@ -564,6 +564,11 @@ class Particle {
     </script>
     """, height=150)
     
+    
+
+    # Get the last order details
+    order = st.session_state.last_order
+
     # Create a nice confirmation box
     with st.container():
         st.markdown("""
@@ -583,11 +588,6 @@ class Particle {
             color=order.get('Color', 'N/A'),
             comments=order.get('Comments', 'None')
         ), unsafe_allow_html=True)
-
-    # Get the last order details
-    order = st.session_state.last_order
-
-
 
     # Navigation buttons
     col1, col2 = st.columns(2)
