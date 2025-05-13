@@ -10,7 +10,7 @@ def create_landing_animation():
     # Load and display the image
     # logo = Image.open("S:\Work (Souhail)\Archive\Exhibitor Version\expo-app//assets\logo.png")
     logo = Image.open("v2_exhibitor_app/assets/logo.png")
-    st.image(logo, use_column_width="auto")
+    st.image(logo, use_container_width="auto")
 
     # Welcome message with animation
     st.markdown("""
