@@ -298,6 +298,9 @@ def load_inventory():
 
 # Main dashboard for logged-in exhibitors
 def show_dashboard():
+    if st.session_state.get("trigger_rerun", False):
+        st.session_state.trigger_rerun = False
+        st.rerun()
     # Add a welcome header with booth number
     st.title(f"Welcome Booth #{st.session_state.booth_number}! 🎪")
     st.caption(f"Show: {st.session_state.selected_show}")
@@ -411,6 +414,8 @@ def show_dashboard():
                             st.session_state.last_order = order_data
                             st.session_state.show_confirmation = True
                             st.session_state.reload_data = True
+                            st.session_state.trigger_rerun = True  # Nouvelle ligne
+                            return  # Stop ici, st.rerun() se fera au prochain cycle
                             
                             # Redirect to confirmation screen
                             st.rerun()
