@@ -36,12 +36,6 @@ def add_scroll_to_top_script():
     }
     </script>
     """, unsafe_allow_html=True)
-    # Button to go to confirmation page
-    if st.button("View Details", on_click=None):  # or your normal logic
-        st.session_state["page"] = "confirmation"
-        # Add inline call to scroll function right away (forces immediate top)
-        st.markdown("<script>scrollToTopBeforeNav()</script>", unsafe_allow_html=True)
-        st.experimental_rerun()
 
 # Apply custom CSS for light mode and styling
 st.markdown("""
