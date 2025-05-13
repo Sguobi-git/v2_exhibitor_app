@@ -524,7 +524,7 @@ let particles = [];
 function spawnFirework() {
     const x = random(canvas.width * 0.2, canvas.width * 0.8);
     const y = random(canvas.height * 0.1, canvas.height * 0.5);
-    for (let i = 0; i < 25; i++) {
+    for (let i = 0; i < 10; i++) {
         particles.push(new Particle(x, y));
     }
 }
