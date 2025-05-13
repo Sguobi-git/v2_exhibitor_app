@@ -82,10 +82,22 @@ def create_card_layout(order):
         # Only show animation button for orders that are not delivered
         if not is_delivered:
             if st.button("View Details", key=f"anim_{order_id}", use_container_width=True):
-                # Store the order in session state and show the confirmation screen
-                st.session_state.last_order = order
-                st.session_state.show_confirmation = True
-                st.rerun()
+                # Inject JS to scroll to top
+        st.markdown("""
+            <script>
+                window.scrollTo(0, 0);
+            </script>
+        """, unsafe_allow_html=True)
+
+        # Store the order in session state and go to confirmation
+        st.session_state.last_order = order
+        st.session_state.show_confirmation = True
+
+        # Delay rerun slightly to allow scroll to happen (important on mobile)
+        import time
+        time.sleep(0.1)
+
+        st.rerun()
         else:
             # Show a disabled button or alternative for delivered orders
             st.markdown("""
