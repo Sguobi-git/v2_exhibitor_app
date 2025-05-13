@@ -15,27 +15,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-def add_scroll_to_top_script():
-     st.markdown("""
-    <script>
-    // Ensure the page scrolls to the top on page load
-    window.onload = function() {
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-        }, 50); // Add a small delay before scrolling to the top
-    };
 
-    // This will handle dynamic navigation (Streamlit pages or other transitions)
-    document.addEventListener('DOMContentLoaded', function() {
-        setTimeout(() => {
-            window.scrollTo(0, 0);
-        }, 50); // Small delay to ensure content is fully loaded
-    });
-    function scrollToTopBeforeNav() {
-        window.scrollTo(0, 0);
-    }
-    </script>
-    """, unsafe_allow_html=True)
 
 # Apply custom CSS for light mode and styling
 st.markdown("""
@@ -298,9 +278,6 @@ def load_inventory():
 
 # Main dashboard for logged-in exhibitors
 def show_dashboard():
-    if st.session_state.get("trigger_rerun", False):
-        st.session_state.trigger_rerun = False
-        st.rerun()
     # Add a welcome header with booth number
     st.title(f"Welcome Booth #{st.session_state.booth_number}! 🎪")
     st.caption(f"Show: {st.session_state.selected_show}")
@@ -414,8 +391,6 @@ def show_dashboard():
                             st.session_state.last_order = order_data
                             st.session_state.show_confirmation = True
                             st.session_state.reload_data = True
-                            st.session_state.trigger_rerun = True  # Nouvelle ligne
-                            return  # Stop ici, st.rerun() se fera au prochain cycle
                             
                             # Redirect to confirmation screen
                             st.rerun()
@@ -430,19 +405,10 @@ def show_dashboard():
                         st.session_state.show_confirmation = True
                         st.rerun()
 
-
-
+# Confirmation screen with animation
 def show_confirmation():
-    # Force scroll to top when the page loads
-    st.components.v1.html("""
-        <script>
-            window.scrollTo(0, 0);
-        </script>
-    """, height=0)
-    
-    # Rest of your confirmation function
-    add_scroll_to_top_script()
     st.title("🎉 Order Confirmed!")
+
 
     from streamlit.components.v1 import html
     from datetime import datetime
@@ -455,135 +421,180 @@ def show_confirmation():
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
 
     <div id="confirmation-animation-root" style="margin: 2rem 0;"></div>
-    <canvas id="fireworks-canvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
 
-    <script>
-    // Confirmation Animation (unchanged)
-    function ConfirmationAnimation() {
-        const [currentMessage, setCurrentMessage] = React.useState(0);
-        const [fade, setFade] = React.useState(true);
+         
+<div id="confirmation-animation-root" class="relative z-10"></div>
+<canvas id="fireworks-canvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
 
-        const messages = [
-            "We've got everything covered ✅",
-            "Your order is on its way to you 🚚",
-            "Your order is excited to meet you 😊"
-        ];
+<script>
+// Confirmation Animation (unchanged)
+function ConfirmationAnimation() {
+    const [currentMessage, setCurrentMessage] = React.useState(0);
+    const [fade, setFade] = React.useState(true);
 
-        React.useEffect(() => {
-            const fadeOutTimer = setTimeout(() => setFade(false), 3500);
-            const changeMessageTimer = setTimeout(() => {
-                setCurrentMessage((prev) => (prev + 1) % messages.length);
-                setFade(true);
-            }, 4000);
-            return () => {
-                clearTimeout(fadeOutTimer);
-                clearTimeout(changeMessageTimer);
-            };
-        }, [currentMessage]);
+    const messages = [
+        "We've got everything covered ✅",
+        "Your order is on its way to you 🚚",
+        "Your order is excited to meet you 😊"
+    ];
 
-        return React.createElement(
+    React.useEffect(() => {
+        const fadeOutTimer = setTimeout(() => setFade(false), 3500);
+        const changeMessageTimer = setTimeout(() => {
+            setCurrentMessage((prev) => (prev + 1) % messages.length);
+            setFade(true);
+        }, 4000);
+        return () => {
+            clearTimeout(fadeOutTimer);
+            clearTimeout(changeMessageTimer);
+        };
+    }, [currentMessage]);
+
+    return React.createElement(
+        'div',
+        { className: 'flex flex-col items-center justify-center w-full py-8' },
+        React.createElement(
             'div',
-            { className: 'flex flex-col items-center justify-center w-full py-8' },
-            React.createElement(
-                'div',
-                {
-                    className: `font-bold transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
-                    style: {
-                        color: '#2e9de6',
-                        fontSize: '1.200rem',
-                        transition: 'opacity 1s ease'
-                    }
-                },
-                messages[currentMessage]
-            )
-        );
-    }
+            {
+                className: `font-bold transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
+                style: {
+                    color: '#2980b9',
+                    fontSize: '1.200rem',
+                    transition: 'opacity 1s ease'
+                }
+            },
+            messages[currentMessage]
+        )
+    );
+}
 
-    const domContainer = document.querySelector('#confirmation-animation-root');
-    ReactDOM.render(React.createElement(ConfirmationAnimation), domContainer);
-    </script>
+const domContainer = document.querySelector('#confirmation-animation-root');
+ReactDOM.render(React.createElement(ConfirmationAnimation), domContainer);
+</script>
 
-    <script>
-    // Light-style multicolored fireworks
-    const canvas = document.getElementById('fireworks-canvas');
-    const ctx = canvas.getContext('2d');
+<script>
+// Light-style multicolored fireworks
+const canvas = document.getElementById('fireworks-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+});
 
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+class Particle {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.angle = random(0, Math.PI * 2);
+        this.speed = random(1, 4);
+        this.radius = random(1, 2.5);
+        this.alpha = 1;
+        this.gravity = 0.05;
+
+        const hue = Math.floor(random(0, 360));
+        this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`; // pastel tones
+    }
+
+    update() {
+        this.x += Math.cos(this.angle) * this.speed;
+        this.y += Math.sin(this.angle) * this.speed + this.gravity;
+        this.alpha -= 0.015;
+        const hueMatch = this.color.match(/hsla\((\d+),/);
+        const hue = hueMatch ? hueMatch[1] : 0;
+        this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`;
+    }
+
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+}
+
+let particles = [];
+
+function spawnFirework() {
+    const x = random(canvas.width * 0.2, canvas.width * 0.8);
+    const y = random(canvas.height * 0.1, canvas.height * 0.5);
+    for (let i = 0; i < 25; i++) {
+        particles.push(new Particle(x, y));
+    }
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    spawnFirework();
+    particles.forEach(p => {
+        p.update();
+        p.draw();
     });
+    particles = particles.filter(p => p.alpha > 0);
+}
 
-    function random(min, max) {
-        return Math.random() * (max - min) + min;
-    }
+animate();
+</script>
 
-    class Particle {
-        constructor(x, y) {
-            this.x = x;
-            this.y = y;
-            this.angle = random(0, Math.PI * 2);
-            this.speed = random(1, 4);
-            this.radius = random(1, 2.5);
-            this.alpha = 1;
-            this.gravity = 0.05;
 
-            const hue = Math.floor(random(0, 360));
-            this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`; // pastel tones
-        }
 
-        update() {
-            this.x += Math.cos(this.angle) * this.speed;
-            this.y += Math.sin(this.angle) * this.speed + this.gravity;
-            this.alpha -= 0.015;
-            const hueMatch = this.color.match(/hsla\((\d+),/);
-            const hue = hueMatch ? hueMatch[1] : 0;
-            this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`;
-        }
 
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-            ctx.fillStyle = this.color;
-            ctx.fill();
-        }
-    }
 
-    let particles = [];
-    let startTime = Date.now(); // Track when the animation starts
-    const duration = 10000; // 7 seconds in milliseconds
 
-    function spawnFirework() {
-        if (Date.now() - startTime > duration) {
-            return; // Stop spawning particles after 7 seconds
-        }
-        const x = random(canvas.width * 0.2, canvas.width * 0.8);
-        const y = random(canvas.height * 0.1, canvas.height * 0.5);
-        for (let i = 0; i < 3; i++) {
-            particles.push(new Particle(x, y));
-        }
-    }
 
-    function animate() {
-        requestAnimationFrame(animate);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        spawnFirework();
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-        particles = particles.filter(p => p.alpha > 0);
+         
+# <script>
+#     function ConfirmationAnimation() {
+#         const [currentMessage, setCurrentMessage] = React.useState(0);
+#         const [fade, setFade] = React.useState(true);
 
-        // Stop the animation after 7 seconds
-        if (Date.now() - startTime > duration) {
-            cancelAnimationFrame(animate); // Stop the animation
-        }
-    }
+#         const messages = [
+#             "We've got everything covered ✅",
+#             "Your order is on its way to you 🚚",
+#             "Your order is excited to meet you 😊"
+#         ];
 
-    animate();
-    </script>
-    """, height=150)
+#         React.useEffect(() => {
+#             const fadeOutTimer = setTimeout(() => {
+#                 setFade(false);
+#             }, 3500);
+#             const changeMessageTimer = setTimeout(() => {
+#                 setCurrentMessage((prev) => (prev + 1) % messages.length);
+#                 setFade(true);
+#             }, 4000);
+
+#             return () => {
+#                 clearTimeout(fadeOutTimer);
+#                 clearTimeout(changeMessageTimer);
+#             };
+#         }, [currentMessage]);
+
+#         return React.createElement(
+#             'div',
+#             { className: 'flex flex-col items-center justify-center w-full py-8' },
+#             React.createElement(
+#                 'div',
+#                 {
+#                     className: `font-bold text-blue-500 transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
+#                     style: { fontSize: '1.200rem', transition: 'opacity 1s ease' } // 22px
+#                 },
+#                 messages[currentMessage]
+#             )
+#         );
+#     }
+
+#     const domContainer = document.querySelector('#confirmation-animation-root');
+#     ReactDOM.render(React.createElement(ConfirmationAnimation), domContainer);
+# </script>
+    """, height=200)
+    
 
     # Get the last order details
     order = st.session_state.last_order
