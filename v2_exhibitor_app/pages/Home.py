@@ -16,17 +16,21 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 def add_scroll_to_top_script():
-    st.markdown("""
+     st.markdown("""
     <script>
-    // Ensure the page scrolls to the top on page load or navigation
+    // Ensure the page scrolls to the top on page load
     window.onload = function() {
-        window.scrollTo(0, 0);
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 50); // Add a small delay before scrolling to the top
     };
 
-    // In case you have dynamic navigation or components (like Streamlit pages or buttons that change views)
-    window.onpopstate = function() {
-        window.scrollTo(0, 0);
-    };
+    // This will handle dynamic navigation (Streamlit pages or other transitions)
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 50); // Small delay to ensure content is fully loaded
+    });
     </script>
     """, unsafe_allow_html=True)
 
