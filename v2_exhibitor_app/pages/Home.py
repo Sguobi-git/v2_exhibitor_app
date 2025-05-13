@@ -415,7 +415,7 @@ def show_confirmation():
     """, height=0)
     
     # Rest of your confirmation function
-    add_scroll_to_top_script()
+    # add_scroll_to_top_script()
     st.title("🎉 Order Confirmed!")
 
 
