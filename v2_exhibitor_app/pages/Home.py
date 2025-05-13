@@ -407,6 +407,15 @@ def show_dashboard():
 
 # Confirmation screen with animation
 def show_confirmation():
+     # Force scroll to top when the page loads
+    st.components.v1.html("""
+        <script>
+            window.scrollTo(0, 0);
+        </script>
+    """, height=0)
+    
+    # Rest of your confirmation function
+    add_scroll_to_top_script()
     st.title("🎉 Order Confirmed!")
 
 
