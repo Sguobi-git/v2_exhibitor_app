@@ -98,12 +98,33 @@ def create_card_layout(order):
         #         time.sleep(0.1)
         
         #         st.rerun()
+
+    
+        # if not is_delivered:
+        #     if st.button("View Details", key=f"anim_{order_id}", use_container_width=True):
+        #         # Store in session state
+        #         st.session_state.last_order = order
+        #         st.session_state.show_confirmation = True
+        #         st.session_state.scroll_and_rerun = True  # New flag to trigger JS
+
+    # Replace the conditional for non-delivered items in create_card_layout
         if not is_delivered:
             if st.button("View Details", key=f"anim_{order_id}", use_container_width=True):
                 # Store in session state
                 st.session_state.last_order = order
                 st.session_state.show_confirmation = True
-                st.session_state.scroll_and_rerun = True  # New flag to trigger JS
+                
+                # Add script to scroll to top before page reload
+                st.markdown("""
+                    <script>
+                        window.scrollTo(0, 0);
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 100);
+                    </script>
+                """, unsafe_allow_html=True)
+                
+                # No immediate rerun needed as the script will handle the reload
     
         # Outside the button (important!)
         if st.session_state.get("scroll_and_rerun"):
