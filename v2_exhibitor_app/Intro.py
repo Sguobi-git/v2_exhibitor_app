@@ -223,8 +223,21 @@ video {{
 
 # Display the HTML (video and logo)
 st.components.v1.html(html_code, height=1000, scrolling=False)
+# Inject JS that redirects to ?clicked=true on any click
+st.components.v1.html("""
+<script>
+document.addEventListener("click", function() {
+    window.location.href = "?clicked=true";
+});
+</script>
+""", height=0)
+
+# Handle redirection
+if st.query_params.get("clicked") == "true":
+    st.switch_page("pages/Home.py")
+
 
 # Add the centrally positioned button
 # This button will be positioned by CSS
-if st.button("Let's show off together", on_click=set_navigate_to_home, key="enter_button"):
-    pass
+# if st.button("Let's show off together", on_click=set_navigate_to_home, key="enter_button"):
+#     pass
