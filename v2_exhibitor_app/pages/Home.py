@@ -679,7 +679,7 @@ def show_confirmation():
 
     let particles = [];
     let startTime = Date.now(); // Track when the animation starts
-    const duration = 7000; // 7 seconds in milliseconds
+    const duration = 10000; // 7 seconds in milliseconds
 
     function spawnFirework() {
         if (Date.now() - startTime > duration) {
