@@ -80,24 +80,45 @@ def create_card_layout(order):
         is_delivered = status in delivered_statuses
 
         # Only show animation button for orders that are not delivered
+        # if not is_delivered:
+        #     if st.button("View Details", key=f"anim_{order_id}", use_container_width=True):
+        #         # Inject JS to scroll to top
+        #         st.markdown("""
+        #             <script>
+        #                 window.scrollTo(0, 0);
+        #             </script>
+        #         """, unsafe_allow_html=True)
+        
+        #         # Store the order in session state and go to confirmation
+        #         st.session_state.last_order = order
+        #         st.session_state.show_confirmation = True
+        
+        #         # Delay rerun slightly to allow scroll to happen (important on mobile)
+        #         import time
+        #         time.sleep(0.1)
+        
+        #         st.rerun()
         if not is_delivered:
             if st.button("View Details", key=f"anim_{order_id}", use_container_width=True):
-                # Inject JS to scroll to top
-                st.markdown("""
-                    <script>
-                        window.scrollTo(0, 0);
-                    </script>
-                """, unsafe_allow_html=True)
-        
-                # Store the order in session state and go to confirmation
+                # Store in session state
                 st.session_state.last_order = order
                 st.session_state.show_confirmation = True
+                st.session_state.scroll_and_rerun = True  # New flag to trigger JS
+    
+        # Outside the button (important!)
+        if st.session_state.get("scroll_and_rerun"):
+            # Clear the flag to avoid looping
+            st.session_state.scroll_and_rerun = False
         
-                # Delay rerun slightly to allow scroll to happen (important on mobile)
-                import time
-                time.sleep(0.1)
-        
-                st.rerun()
+            # Inject JS that scrolls to top, then reloads
+            st.markdown("""
+                <script>
+                    window.scrollTo(0, 0);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 100);  // Wait 100ms before reload
+                </script>
+            """, unsafe_allow_html=True)
         else:
             # Show a disabled button or alternative for delivered orders
             st.markdown("""
