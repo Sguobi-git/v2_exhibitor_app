@@ -423,7 +423,7 @@ def show_confirmation():
     <div id="confirmation-animation-root" style="margin: 2rem 0;"></div>
 
          
-<div id="confirmation-animation-root" class="relative z-10"></div>
+# <div id="confirmation-animation-root" class="relative z-10"></div>
 <canvas id="fireworks-canvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
 
 <script>
