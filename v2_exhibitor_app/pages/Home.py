@@ -542,7 +542,7 @@ function animate() {
 
 animate();
 </script>
-    """, height=100)
+    """, height=150)
     
 
     # Get the last order details
