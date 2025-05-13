@@ -424,6 +424,28 @@ def show_confirmation():
 
     component_key = f"confirmation_{datetime.now().timestamp()}"
 
+
+    # Create a nice confirmation box
+        with st.container():
+            st.markdown("""
+            <div style="padding: 2rem; background-color: #f0f9ff; border-radius: 15px; 
+                        border-left: 5px solid #3498db; margin-bottom: 1rem;">
+                <h2 style="color: #2980b9;">Order Summary</h2>
+                <p style="font-size: 1.1rem;">
+                    <strong>Item:</strong> {item}<br>
+                    <strong>Quantity:</strong> {quantity}<br>
+                    <strong>Color:</strong> {color}<br>
+                    <strong>Comments:</strong> {comments}
+                </p>
+            </div>
+            """.format(
+                item=order.get('Item', 'N/A'),
+                quantity=order.get('Quantity', 'N/A'),
+                color=order.get('Color', 'N/A'),
+                comments=order.get('Comments', 'None')
+            ), unsafe_allow_html=True)
+
+    
     html("""
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"></script>
@@ -567,26 +589,6 @@ class Particle {
 
     # Get the last order details
     order = st.session_state.last_order
-
-    # Create a nice confirmation box
-    with st.container():
-        st.markdown("""
-        <div style="padding: 2rem; background-color: #f0f9ff; border-radius: 15px; 
-                    border-left: 5px solid #3498db; margin-bottom: 1rem;">
-            <h2 style="color: #2980b9;">Order Summary</h2>
-            <p style="font-size: 1.1rem;">
-                <strong>Item:</strong> {item}<br>
-                <strong>Quantity:</strong> {quantity}<br>
-                <strong>Color:</strong> {color}<br>
-                <strong>Comments:</strong> {comments}
-            </p>
-        </div>
-        """.format(
-            item=order.get('Item', 'N/A'),
-            quantity=order.get('Quantity', 'N/A'),
-            color=order.get('Color', 'N/A'),
-            comments=order.get('Comments', 'None')
-        ), unsafe_allow_html=True)
 
 
 
