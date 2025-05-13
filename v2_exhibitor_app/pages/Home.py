@@ -420,7 +420,7 @@ def show_confirmation():
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
 
-    # <div id="confirmation-animation-root" style="margin: 2rem 0;"></div>
+    <div id="confirmation-animation-root" style="margin: 2rem 0;"></div>
 
          
 <div id="confirmation-animation-root" class="relative z-10"></div>
