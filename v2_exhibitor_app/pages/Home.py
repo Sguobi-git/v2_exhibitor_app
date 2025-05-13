@@ -542,57 +542,6 @@ function animate() {
 
 animate();
 </script>
-
-
-
-
-
-
-
-         
-# <script>
-#     function ConfirmationAnimation() {
-#         const [currentMessage, setCurrentMessage] = React.useState(0);
-#         const [fade, setFade] = React.useState(true);
-
-#         const messages = [
-#             "We've got everything covered ✅",
-#             "Your order is on its way to you 🚚",
-#             "Your order is excited to meet you 😊"
-#         ];
-
-#         React.useEffect(() => {
-#             const fadeOutTimer = setTimeout(() => {
-#                 setFade(false);
-#             }, 3500);
-#             const changeMessageTimer = setTimeout(() => {
-#                 setCurrentMessage((prev) => (prev + 1) % messages.length);
-#                 setFade(true);
-#             }, 4000);
-
-#             return () => {
-#                 clearTimeout(fadeOutTimer);
-#                 clearTimeout(changeMessageTimer);
-#             };
-#         }, [currentMessage]);
-
-#         return React.createElement(
-#             'div',
-#             { className: 'flex flex-col items-center justify-center w-full py-8' },
-#             React.createElement(
-#                 'div',
-#                 {
-#                     className: `font-bold text-blue-500 transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
-#                     style: { fontSize: '1.200rem', transition: 'opacity 1s ease' } // 22px
-#                 },
-#                 messages[currentMessage]
-#             )
-#         );
-#     }
-
-#     const domContainer = document.querySelector('#confirmation-animation-root');
-#     ReactDOM.render(React.createElement(ConfirmationAnimation), domContainer);
-# </script>
     """, height=200)
     
 
