@@ -146,16 +146,20 @@ def create_card_layout(order):
                 st.session_state.last_order = order
                 st.session_state.show_confirmation = True
                 
-                # Add script to scroll to top before page reload
-                st.markdown("""
+                # Force browser to top of page BEFORE rerun
+                st.components.v1.html("""
                     <script>
+                        // Force scroll to top
                         window.scrollTo(0, 0);
-                        setTimeout(function() {
-                            window.location.reload();
-                        }, 100);
+                        
+                        // Set a flag in localStorage that we've scrolled
+                        localStorage.setItem('scrolledToTop', 'true');
                     </script>
-                """, unsafe_allow_html=True)
-
+                """, height=0)
+                
+                # Use streamlit's rerun
+                time.sleep(0.2)  # Give the browser time to execute the script
+                st.rerun()
 
 
 def create_confirmation_animation(container):
