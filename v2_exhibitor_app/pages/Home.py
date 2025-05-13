@@ -406,9 +406,170 @@ def show_dashboard():
                         st.rerun()
 
 # Confirmation screen with animation
+# def show_confirmation():
+#     st.title("🎉 Order Confirmed!")
+
+
+#     from streamlit.components.v1 import html
+#     from datetime import datetime
+
+#     component_key = f"confirmation_{datetime.now().timestamp()}"
+
+#     html("""
+#     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+#     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"></script>
+#     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
+
+#     <div id="confirmation-animation-root" style="margin: 2rem 0;"></div>
+
+         
+# <div id="confirmation-animation-root" class="relative z-10"></div>
+# <canvas id="fireworks-canvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
+
+# <script>
+# // Confirmation Animation (unchanged)
+# function ConfirmationAnimation() {
+#     const [currentMessage, setCurrentMessage] = React.useState(0);
+#     const [fade, setFade] = React.useState(true);
+
+#     const messages = [
+#         "We've got everything covered ✅",
+#         "Your order is on its way to you 🚚",
+#         "Your order is excited to meet you 😊"
+#     ];
+
+#     React.useEffect(() => {
+#         const fadeOutTimer = setTimeout(() => setFade(false), 3500);
+#         const changeMessageTimer = setTimeout(() => {
+#             setCurrentMessage((prev) => (prev + 1) % messages.length);
+#             setFade(true);
+#         }, 4000);
+#         return () => {
+#             clearTimeout(fadeOutTimer);
+#             clearTimeout(changeMessageTimer);
+#         };
+#     }, [currentMessage]);
+
+#     return React.createElement(
+#         'div',
+#         { className: 'flex flex-col items-center justify-center w-full py-8' },
+#         React.createElement(
+#             'div',
+#             {
+#                 className: `font-bold transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
+#                 style: {
+#                     color: '#2e9de6',
+#                     fontSize: '1.200rem',
+#                     transition: 'opacity 1s ease'
+#                 }
+#             },
+#             messages[currentMessage]
+#         )
+#     );
+# }
+
+# const domContainer = document.querySelector('#confirmation-animation-root');
+# ReactDOM.render(React.createElement(ConfirmationAnimation), domContainer);
+# </script>
+
+# <script>
+# // Light-style multicolored fireworks
+# const canvas = document.getElementById('fireworks-canvas');
+# const ctx = canvas.getContext('2d');
+# canvas.width = window.innerWidth;
+# canvas.height = window.innerHeight;
+
+# window.addEventListener('resize', () => {
+#     canvas.width = window.innerWidth;
+#     canvas.height = window.innerHeight;
+# });
+
+# function random(min, max) {
+#     return Math.random() * (max - min) + min;
+# }
+
+# class Particle {
+#     constructor(x, y) {
+#         this.x = x;
+#         this.y = y;
+#         this.angle = random(0, Math.PI * 2);
+#         this.speed = random(1, 4);
+#         this.radius = random(1, 2.5);
+#         this.alpha = 1;
+#         this.gravity = 0.05;
+
+#         const hue = Math.floor(random(0, 360));
+#         this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`; // pastel tones
+#     }
+
+#     update() {
+#         this.x += Math.cos(this.angle) * this.speed;
+#         this.y += Math.sin(this.angle) * this.speed + this.gravity;
+#         this.alpha -= 0.015;
+#         const hueMatch = this.color.match(/hsla\((\d+),/);
+#         const hue = hueMatch ? hueMatch[1] : 0;
+#         this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`;
+#     }
+
+#     draw() {
+#         ctx.beginPath();
+#         ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+#         ctx.fillStyle = this.color;
+#         ctx.fill();
+#     }
+# }
+
+# let particles = [];
+
+# function spawnFirework() {
+#     const x = random(canvas.width * 0.2, canvas.width * 0.8);
+#     const y = random(canvas.height * 0.1, canvas.height * 0.5);
+#     for (let i = 0; i < 3; i++) {
+#         particles.push(new Particle(x, y));
+#     }
+# }
+
+# function animate() {
+#     requestAnimationFrame(animate);
+#     ctx.clearRect(0, 0, canvas.width, canvas.height);
+#     spawnFirework();
+#     particles.forEach(p => {
+#         p.update();
+#         p.draw();
+#     });
+#     particles = particles.filter(p => p.alpha > 0);
+# }
+
+# animate();
+# </script>
+#     """, height=150)
+    
+
+#     # Get the last order details
+#     order = st.session_state.last_order
+
+#     # Create a nice confirmation box
+#     with st.container():
+#         st.markdown("""
+#         <div style="padding: 2rem; background-color: #f0f9ff; border-radius: 15px; 
+#                     border-left: 5px solid #3498db; margin-bottom: 1rem;">
+#             <h2 style="color: #2980b9;">Order Summary</h2>
+#             <p style="font-size: 1.1rem;">
+#                 <strong>Item:</strong> {item}<br>
+#                 <strong>Quantity:</strong> {quantity}<br>
+#                 <strong>Color:</strong> {color}<br>
+#                 <strong>Comments:</strong> {comments}
+#             </p>
+#         </div>
+#         """.format(
+#             item=order.get('Item', 'N/A'),
+#             quantity=order.get('Quantity', 'N/A'),
+#             color=order.get('Color', 'N/A'),
+#             comments=order.get('Comments', 'None')
+#         ), unsafe_allow_html=True)
+
 def show_confirmation():
     st.title("🎉 Order Confirmed!")
-
 
     from streamlit.components.v1 import html
     from datetime import datetime
@@ -421,129 +582,135 @@ def show_confirmation():
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
 
     <div id="confirmation-animation-root" style="margin: 2rem 0;"></div>
+    <canvas id="fireworks-canvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
 
-         
-<div id="confirmation-animation-root" class="relative z-10"></div>
-<canvas id="fireworks-canvas" class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none"></canvas>
+    <script>
+    // Confirmation Animation (unchanged)
+    function ConfirmationAnimation() {
+        const [currentMessage, setCurrentMessage] = React.useState(0);
+        const [fade, setFade] = React.useState(true);
 
-<script>
-// Confirmation Animation (unchanged)
-function ConfirmationAnimation() {
-    const [currentMessage, setCurrentMessage] = React.useState(0);
-    const [fade, setFade] = React.useState(true);
+        const messages = [
+            "We've got everything covered ✅",
+            "Your order is on its way to you 🚚",
+            "Your order is excited to meet you 😊"
+        ];
 
-    const messages = [
-        "We've got everything covered ✅",
-        "Your order is on its way to you 🚚",
-        "Your order is excited to meet you 😊"
-    ];
+        React.useEffect(() => {
+            const fadeOutTimer = setTimeout(() => setFade(false), 3500);
+            const changeMessageTimer = setTimeout(() => {
+                setCurrentMessage((prev) => (prev + 1) % messages.length);
+                setFade(true);
+            }, 4000);
+            return () => {
+                clearTimeout(fadeOutTimer);
+                clearTimeout(changeMessageTimer);
+            };
+        }, [currentMessage]);
 
-    React.useEffect(() => {
-        const fadeOutTimer = setTimeout(() => setFade(false), 3500);
-        const changeMessageTimer = setTimeout(() => {
-            setCurrentMessage((prev) => (prev + 1) % messages.length);
-            setFade(true);
-        }, 4000);
-        return () => {
-            clearTimeout(fadeOutTimer);
-            clearTimeout(changeMessageTimer);
-        };
-    }, [currentMessage]);
-
-    return React.createElement(
-        'div',
-        { className: 'flex flex-col items-center justify-center w-full py-8' },
-        React.createElement(
+        return React.createElement(
             'div',
-            {
-                className: `font-bold transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
-                style: {
-                    color: '#2e9de6',
-                    fontSize: '1.200rem',
-                    transition: 'opacity 1s ease'
-                }
-            },
-            messages[currentMessage]
-        )
-    );
-}
+            { className: 'flex flex-col items-center justify-center w-full py-8' },
+            React.createElement(
+                'div',
+                {
+                    className: `font-bold transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
+                    style: {
+                        color: '#2e9de6',
+                        fontSize: '1.200rem',
+                        transition: 'opacity 1s ease'
+                    }
+                },
+                messages[currentMessage]
+            )
+        );
+    }
 
-const domContainer = document.querySelector('#confirmation-animation-root');
-ReactDOM.render(React.createElement(ConfirmationAnimation), domContainer);
-</script>
+    const domContainer = document.querySelector('#confirmation-animation-root');
+    ReactDOM.render(React.createElement(ConfirmationAnimation), domContainer);
+    </script>
 
-<script>
-// Light-style multicolored fireworks
-const canvas = document.getElementById('fireworks-canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-window.addEventListener('resize', () => {
+    <script>
+    // Light-style multicolored fireworks
+    const canvas = document.getElementById('fireworks-canvas');
+    const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-});
 
-function random(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
-class Particle {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.angle = random(0, Math.PI * 2);
-        this.speed = random(1, 4);
-        this.radius = random(1, 2.5);
-        this.alpha = 1;
-        this.gravity = 0.05;
-
-        const hue = Math.floor(random(0, 360));
-        this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`; // pastel tones
-    }
-
-    update() {
-        this.x += Math.cos(this.angle) * this.speed;
-        this.y += Math.sin(this.angle) * this.speed + this.gravity;
-        this.alpha -= 0.015;
-        const hueMatch = this.color.match(/hsla\((\d+),/);
-        const hue = hueMatch ? hueMatch[1] : 0;
-        this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`;
-    }
-
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }
-}
-
-let particles = [];
-
-function spawnFirework() {
-    const x = random(canvas.width * 0.2, canvas.width * 0.8);
-    const y = random(canvas.height * 0.1, canvas.height * 0.5);
-    for (let i = 0; i < 3; i++) {
-        particles.push(new Particle(x, y));
-    }
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    spawnFirework();
-    particles.forEach(p => {
-        p.update();
-        p.draw();
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
     });
-    particles = particles.filter(p => p.alpha > 0);
-}
 
-animate();
-</script>
-    """, height=150)
-    
+    function random(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    class Particle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.angle = random(0, Math.PI * 2);
+            this.speed = random(1, 4);
+            this.radius = random(1, 2.5);
+            this.alpha = 1;
+            this.gravity = 0.05;
+
+            const hue = Math.floor(random(0, 360));
+            this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`; // pastel tones
+        }
+
+        update() {
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed + this.gravity;
+            this.alpha -= 0.015;
+            const hueMatch = this.color.match(/hsla\((\d+),/);
+            const hue = hueMatch ? hueMatch[1] : 0;
+            this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+    }
+
+    let particles = [];
+    let startTime = Date.now(); // Track when the animation starts
+    const duration = 7000; // 7 seconds in milliseconds
+
+    function spawnFirework() {
+        if (Date.now() - startTime > duration) {
+            return; // Stop spawning particles after 7 seconds
+        }
+        const x = random(canvas.width * 0.2, canvas.width * 0.8);
+        const y = random(canvas.height * 0.1, canvas.height * 0.5);
+        for (let i = 0; i < 3; i++) {
+            particles.push(new Particle(x, y));
+        }
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        spawnFirework();
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        particles = particles.filter(p => p.alpha > 0);
+
+        // Stop the animation after 7 seconds
+        if (Date.now() - startTime > duration) {
+            cancelAnimationFrame(animate); // Stop the animation
+        }
+    }
+
+    animate();
+    </script>
+    """, height=600)
 
     # Get the last order details
     order = st.session_state.last_order
