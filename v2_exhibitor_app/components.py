@@ -74,63 +74,20 @@ def create_card_layout(order):
     # Add buttons for order actions - now full width
     col1 = st.columns(1)[0]
     
-    # with col1:
-    #     # Check if this is a "delivered" type of status
-    #     delivered_statuses = ['Delivered', 'Received']
-    #     is_delivered = status in delivered_statuses
-
-    # # Replace the conditional for non-delivered items in create_card_layout
-    #     if not is_delivered:
-    #         if st.button("View Details", key=f"anim_{order_id}", use_container_width=True):
-    #             # Store in session state
-    #             st.session_state.last_order = order
-    #             st.session_state.show_confirmation = True
-                
-    #             # Add script to scroll to top before page reload
-    #             st.markdown("""
-    #                 <script>
-    #                     window.scrollTo(0, 0);
-    #                     setTimeout(function() {
-    #                         window.location.reload();
-    #                     }, 100);
-    #                 </script>
-    #             """, unsafe_allow_html=True)
-                
-    #             # No immediate rerun needed as the script will handle the reload
-    
-    #     # Outside the button (important!)
-    #     if st.session_state.get("scroll_and_rerun"):
-    #         # Clear the flag to avoid looping
-    #         st.session_state.scroll_and_rerun = False
-        
-    #         # Inject JS that scrolls to top, then reloads
-    #         st.markdown("""
-    #             <script>
-    #                 window.scrollTo(0, 0);
-    #                 setTimeout(function() {
-    #                     location.reload();
-    #                 }, 100);  // Wait 100ms before reload
-    #             </script>
-    #         """, unsafe_allow_html=True)
-    #     else:
-    #         # Show a disabled button or alternative for delivered orders
-    #         st.markdown("""
-    #         <div style="width: 100%; text-align: center;">
-    #             <button style="width: 100%; background-color: #e2e8f0; color: #718096; 
-    #                           border-radius: 10px; padding: 0.5rem; cursor: not-allowed;">
-    #                 Order Complete
-    #             </button>
-    #         </div>
-    #         """, unsafe_allow_html=True)
-
     with col1:
         # Check if this is a "delivered" type of status
         delivered_statuses = ['Delivered', 'Received']
         is_delivered = status in delivered_statuses
-        
-        # Show appropriate button based on status
-        if is_delivered:
-            # Show disabled button for delivered orders
+
+        # Only show animation button for orders that are not delivered
+        if not is_delivered:
+            if st.button("View Details", key=f"anim_{order_id}", use_container_width=True):
+                # Store the order in session state and show the confirmation screen
+                st.session_state.last_order = order
+                st.session_state.show_confirmation = True
+                st.rerun()
+        else:
+            # Show a disabled button or alternative for delivered orders
             st.markdown("""
             <div style="width: 100%; text-align: center;">
                 <button style="width: 100%; background-color: #e2e8f0; color: #718096; 
@@ -139,27 +96,6 @@ def create_card_layout(order):
                 </button>
             </div>
             """, unsafe_allow_html=True)
-        else:
-            # For non-delivered orders, show View Details button
-            if st.button("View Details", key=f"anim_{order_id}", use_container_width=True):
-                # Store in session state
-                st.session_state.last_order = order
-                st.session_state.show_confirmation = True
-                
-                # Force browser to top of page BEFORE rerun
-                st.components.v1.html("""
-                    <script>
-                        // Force scroll to top
-                        window.scrollTo(0, 0);
-                        
-                        // Set a flag in localStorage that we've scrolled
-                        localStorage.setItem('scrolledToTop', 'true');
-                    </script>
-                """, height=0)
-                
-                # Use streamlit's rerun
-                time.sleep(0.2)  # Give the browser time to execute the script
-                st.rerun()
 
 
 def create_confirmation_animation(container):
