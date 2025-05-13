@@ -498,111 +498,71 @@ function random(min, max) {
 }
 
 class Particle {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.angle = random(0, Math.PI * 2);
-        this.speed = random(1, 4);
-        this.radius = random(1, 2.5);
-        this.alpha = 1;
-        this.gravity = 0.05;
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.angle = random(0, Math.PI * 2);
+            this.speed = random(1, 4);
+            this.radius = random(1, 2.5);
+            this.alpha = 1;
+            this.gravity = 0.05;
 
-        const hue = Math.floor(random(0, 360));
-        this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`; // pastel tones
+            const hue = Math.floor(random(0, 360));
+            this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`; // pastel tones
+        }
+
+        update() {
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed + this.gravity;
+            this.alpha -= 0.015;
+            const hueMatch = this.color.match(/hsla\((\d+),/);
+            const hue = hueMatch ? hueMatch[1] : 0;
+            this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
     }
 
-    update() {
-        this.x += Math.cos(this.angle) * this.speed;
-        this.y += Math.sin(this.angle) * this.speed + this.gravity;
-        this.alpha -= 0.015;
-        const hueMatch = this.color.match(/hsla\((\d+),/);
-        const hue = hueMatch ? hueMatch[1] : 0;
-        this.color = `hsla(${hue}, 90%, 75%, ${this.alpha})`;
+    let particles = [];
+    let startTime = Date.now(); // Track when the animation starts
+    const duration = 10000; // 7 seconds in milliseconds
+
+    function spawnFirework() {
+        if (Date.now() - startTime > duration) {
+            return; // Stop spawning particles after 7 seconds
+        }
+        const x = random(canvas.width * 0.2, canvas.width * 0.8);
+        const y = random(canvas.height * 0.1, canvas.height * 0.5);
+        for (let i = 0; i < 3; i++) {
+            particles.push(new Particle(x, y));
+        }
     }
 
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = this.color;
-        ctx.fill();
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        spawnFirework();
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        particles = particles.filter(p => p.alpha > 0);
+
+        // Stop the animation after 7 seconds
+        if (Date.now() - startTime > duration) {
+            cancelAnimationFrame(animate); // Stop the animation
+        }
     }
-}
 
-let particles = [];
-
-function spawnFirework() {
-    const x = random(canvas.width * 0.2, canvas.width * 0.8);
-    const y = random(canvas.height * 0.1, canvas.height * 0.5);
-    for (let i = 0; i < 25; i++) {
-        particles.push(new Particle(x, y));
-    }
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    spawnFirework();
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-    particles = particles.filter(p => p.alpha > 0);
-}
-
-animate();
-</script>
-
-
-
-
-
-
-
-         
-# <script>
-#     function ConfirmationAnimation() {
-#         const [currentMessage, setCurrentMessage] = React.useState(0);
-#         const [fade, setFade] = React.useState(true);
-
-#         const messages = [
-#             "We've got everything covered ✅",
-#             "Your order is on its way to you 🚚",
-#             "Your order is excited to meet you 😊"
-#         ];
-
-#         React.useEffect(() => {
-#             const fadeOutTimer = setTimeout(() => {
-#                 setFade(false);
-#             }, 3500);
-#             const changeMessageTimer = setTimeout(() => {
-#                 setCurrentMessage((prev) => (prev + 1) % messages.length);
-#                 setFade(true);
-#             }, 4000);
-
-#             return () => {
-#                 clearTimeout(fadeOutTimer);
-#                 clearTimeout(changeMessageTimer);
-#             };
-#         }, [currentMessage]);
-
-#         return React.createElement(
-#             'div',
-#             { className: 'flex flex-col items-center justify-center w-full py-8' },
-#             React.createElement(
-#                 'div',
-#                 {
-#                     className: `font-bold text-blue-500 transition-opacity duration-1000 ${fade ? 'opacity-100' : 'opacity-0'}`,
-#                     style: { fontSize: '1.200rem', transition: 'opacity 1s ease' } // 22px
-#                 },
-#                 messages[currentMessage]
-#             )
-#         );
-#     }
-
-#     const domContainer = document.querySelector('#confirmation-animation-root');
-#     ReactDOM.render(React.createElement(ConfirmationAnimation), domContainer);
-# </script>
-    """, height=200)
+    animate();
+    </script>
+    """, height=150)
+    
     
 
     # Get the last order details
