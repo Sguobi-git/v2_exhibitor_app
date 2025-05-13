@@ -15,7 +15,20 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+def add_scroll_to_top_script():
+    st.markdown("""
+    <script>
+    // Ensure the page scrolls to the top on page load or navigation
+    window.onload = function() {
+        window.scrollTo(0, 0);
+    };
 
+    // In case you have dynamic navigation or components (like Streamlit pages or buttons that change views)
+    window.onpopstate = function() {
+        window.scrollTo(0, 0);
+    };
+    </script>
+    """, unsafe_allow_html=True)
 
 # Apply custom CSS for light mode and styling
 st.markdown("""
@@ -569,6 +582,7 @@ def show_dashboard():
 #         ), unsafe_allow_html=True)
 
 def show_confirmation():
+    add_scroll_to_top_script()
     st.title("🎉 Order Confirmed!")
 
     from streamlit.components.v1 import html
