@@ -710,7 +710,7 @@ def show_confirmation():
 
     animate();
     </script>
-    """, height=600)
+    """, height=150)
 
     # Get the last order details
     order = st.session_state.last_order
