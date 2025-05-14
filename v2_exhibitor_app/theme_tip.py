@@ -57,7 +57,6 @@ If this page appears dark, it means your browser or system is in dark mode.<br><
 To switch to Light Mode:
 <ul>
     <li>Click the <span style="font-size: 2em; margin-right: 10px; margin-left: 10px;">⋮</span> icon at the top-right corner</li>
-
     <li>Select <b>Settings</b></li>
     <li>Then choose <b>Appearance → Light</b></li>
 </ul>
