@@ -50,29 +50,29 @@ st.markdown("""
     #     border: 1px solid #e0e0e0 !important;
     # }
     
-    /* Button styling */
-    .stButton button {
-        background-color: #3498db !important;
-        color: white !important;
-        border-radius: 10px !important;
-        transition: all 0.3s ease !important;
-        border: none !important;
-    }
+    # /* Button styling */
+    # .stButton button {
+    #     background-color: #3498db !important;
+    #     color: white !important;
+    #     border-radius: 10px !important;
+    #     transition: all 0.3s ease !important;
+    #     border: none !important;
+    # }
     .stButton button:hover {
         background-color: #2980b9 !important;
         transform: translateY(-2px) !important;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
     }
     
-    /* Card styling */
-    .card {
-        border-radius: 15px !important;
-        padding: 1.5rem !important;
-        background: white !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
-        margin-bottom: 1rem !important;
-        transition: all 0.3s ease !important;
-    }
+    # /* Card styling */
+    # .card {
+    #     border-radius: 15px !important;
+    #     padding: 1.5rem !important;
+    #     background: white !important;
+    #     box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+    #     margin-bottom: 1rem !important;
+    #     transition: all 0.3s ease !important;
+    # }
     .card:hover {
         box-shadow: 0 6px 14px rgba(0,0,0,0.1) !important;
         transform: translateY(-3px) !important;
@@ -98,11 +98,11 @@ st.markdown("""
         border-right: 1px solid #e0e0e0 !important;
     }
     
-    /* Make sure dropdown menus are visible */
-    .stSelectbox > div > div > ul {
-        background-color: white !important;
-        color: #2c3e50 !important;
-    }
+    # /* Make sure dropdown menus are visible */
+    # .stSelectbox > div > div > ul {
+    #     background-color: white !important;
+    #     color: #2c3e50 !important;
+    # }
     
     /* Tab styling for visibility */
     div[role="tablist"] {
@@ -120,12 +120,12 @@ st.markdown("""
         transition: all 0.2s ease !important;
     }
     
-    /* Style for active tab */
-    div[role="tablist"] button[aria-selected="true"] {
-        background-color: #3498db !important;
-        color: white !important;
-        border-radius: 4px !important;
-    }
+    # /* Style for active tab */
+    # div[role="tablist"] button[aria-selected="true"] {
+    #     background-color: #3498db !important;
+    #     color: white !important;
+    #     border-radius: 4px !important;
+    # }
     
     /* Style for tab text in both selected and unselected state */
     div[role="tablist"] button p {
@@ -133,14 +133,14 @@ st.markdown("""
         font-weight: inherit !important;
     }
     
-    /* Style for tab content area */
-    div[data-baseweb="tab-panel"] {
-        background-color: white !important;
-        border-radius: 0 4px 4px 4px !important;
-        border: 1px solid #e0e0e0 !important;
-        padding: 15px !important;
-        margin-top: -1px !important;
-    }
+    # /* Style for tab content area */
+    # div[data-baseweb="tab-panel"] {
+    #     background-color: white !important;
+    #     border-radius: 0 4px 4px 4px !important;
+    #     border: 1px solid #e0e0e0 !important;
+    #     padding: 15px !important;
+    #     margin-top: -1px !important;
+    # }
 </style>
 
 """, unsafe_allow_html=True)
