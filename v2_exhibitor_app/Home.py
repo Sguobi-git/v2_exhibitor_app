@@ -20,35 +20,35 @@ st.set_page_config(
 # Apply custom CSS for light mode and styling
 st.markdown("""
 <style>
-    /* Force light mode regardless of browser settings */
-    :root {
-        --background-color: #f8f9fa !important;
-        --secondary-background-color: #ffffff !important;
-        --text-color: #2c3e50 !important;
-        --font: "Source Sans Pro", sans-serif !important;
-    }
+    # /* Force light mode regardless of browser settings */
+    # :root {
+    #     --background-color: #f8f9fa !important;
+    #     --secondary-background-color: #ffffff !important;
+    #     --text-color: #2c3e50 !important;
+    #     --font: "Source Sans Pro", sans-serif !important;
+    # }
     
-    /* Override Streamlit's auto dark mode detection */
-    [data-testid="stAppViewContainer"], 
-    [data-testid="stHeader"],
-    [data-testid="stToolbar"],
-    [data-testid="stSidebar"],
-    .stApp {
-        background-color: #f8f9fa !important;
-        color: #2c3e50 !important;
-    }
+    # /* Override Streamlit's auto dark mode detection */
+    # [data-testid="stAppViewContainer"], 
+    # [data-testid="stHeader"],
+    # [data-testid="stToolbar"],
+    # [data-testid="stSidebar"],
+    # .stApp {
+    #     background-color: #f8f9fa !important;
+    #     color: #2c3e50 !important;
+    # }
     
-    /* Make sure text remains dark */
-    p, h1, h2, h3, span, label, .stTextInput > label, .stSelectbox > label {
-        color: #2c3e50 !important;
-    }
+    # /* Make sure text remains dark */
+    # p, h1, h2, h3, span, label, .stTextInput > label, .stSelectbox > label {
+    #     color: #2c3e50 !important;
+    # }
     
-    /* Ensure input fields have proper contrast */
-    .stTextInput > div > div > input, .stSelectbox > div > div > div {
-        background-color: white !important;
-        color: #2c3e50 !important;
-        border: 1px solid #e0e0e0 !important;
-    }
+    # /* Ensure input fields have proper contrast */
+    # .stTextInput > div > div > input, .stSelectbox > div > div > div {
+    #     background-color: white !important;
+    #     color: #2c3e50 !important;
+    #     border: 1px solid #e0e0e0 !important;
+    # }
     
     /* Button styling */
     .stButton button {
