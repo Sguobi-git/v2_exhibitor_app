@@ -110,15 +110,15 @@ st.markdown("""
     #     border-radius: 4px !important;
     # }
     
-    /* Style for ALL tab buttons to ensure they're visible */
-    div[role="tablist"] button {
-        opacity: 1 !important;
-        background-color: transparent !important;
-        color: #2c3e50 !important;
-        font-weight: 500 !important;
-        padding: 10px 15px !important;
-        transition: all 0.2s ease !important;
-    }
+    # /* Style for ALL tab buttons to ensure they're visible */
+    # div[role="tablist"] button {
+    #     opacity: 1 !important;
+    #     background-color: transparent !important;
+    #     color: #2c3e50 !important;
+    #     font-weight: 500 !important;
+    #     padding: 10px 15px !important;
+    #     transition: all 0.2s ease !important;
+    # }
     
     # /* Style for active tab */
     # div[role="tablist"] button[aria-selected="true"] {
