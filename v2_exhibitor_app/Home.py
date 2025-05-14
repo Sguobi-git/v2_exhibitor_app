@@ -64,15 +64,15 @@ st.markdown("""
         box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
     }
     
-    # /* Card styling */
-    # .card {
-    #     border-radius: 15px !important;
-    #     padding: 1.5rem !important;
-    #     background: white !important;
-    #     box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
-    #     margin-bottom: 1rem !important;
-    #     transition: all 0.3s ease !important;
-    # }
+    /* Card styling */
+    .card {
+        border-radius: 15px !important;
+        padding: 1.5rem !important;
+        background: white !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05) !important;
+        margin-bottom: 1rem !important;
+        transition: all 0.3s ease !important;
+    }
     .card:hover {
         box-shadow: 0 6px 14px rgba(0,0,0,0.1) !important;
         transform: translateY(-3px) !important;
@@ -92,11 +92,11 @@ st.markdown("""
         font-weight: bold !important;
     }
     
-    /* Sidebar styling */
-    [data-testid="stSidebar"] {
-        background-color: #ffffff !important;
-        border-right: 1px solid #e0e0e0 !important;
-    }
+    # /* Sidebar styling */
+    # [data-testid="stSidebar"] {
+    #     background-color: #ffffff !important;
+    #     border-right: 1px solid #e0e0e0 !important;
+    # }
     
     # /* Make sure dropdown menus are visible */
     # .stSelectbox > div > div > ul {
@@ -104,11 +104,11 @@ st.markdown("""
     #     color: #2c3e50 !important;
     # }
     
-    /* Tab styling for visibility */
-    div[role="tablist"] {
-        background-color: #f1f3f4 !important;
-        border-radius: 4px !important;
-    }
+    # /* Tab styling for visibility */
+    # div[role="tablist"] {
+    #     background-color: #f1f3f4 !important;
+    #     border-radius: 4px !important;
+    # }
     
     /* Style for ALL tab buttons to ensure they're visible */
     div[role="tablist"] button {
@@ -127,11 +127,11 @@ st.markdown("""
     #     border-radius: 4px !important;
     # }
     
-    /* Style for tab text in both selected and unselected state */
-    div[role="tablist"] button p {
-        color: inherit !important;
-        font-weight: inherit !important;
-    }
+    # /* Style for tab text in both selected and unselected state */
+    # div[role="tablist"] button p {
+    #     color: inherit !important;
+    #     font-weight: inherit !important;
+    # }
     
     # /* Style for tab content area */
     # div[data-baseweb="tab-panel"] {
