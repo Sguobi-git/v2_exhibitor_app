@@ -142,6 +142,25 @@ st.markdown("""
         margin-top: -1px !important;
     }
 </style>
+/* Make sidebar toggle (hamburger/arrow) always visible */
+button[kind="header"] svg {
+    stroke: black !important; /* icon color */
+    fill: black !important;   /* in case it uses fill */
+}
+
+/* Optional: give it a background so it's always visible */
+button[kind="header"] {
+    background-color: #e0e0e0 !important;
+    border-radius: 6px !important;
+    padding: 4px !important;
+    margin-left: 10px !important;
+    transition: background-color 0.3s ease;
+}
+
+button[kind="header"]:hover {
+    background-color: #d0d0d0 !important;
+}
+
 """, unsafe_allow_html=True)
 
 
