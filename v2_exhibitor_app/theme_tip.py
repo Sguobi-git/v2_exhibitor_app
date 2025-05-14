@@ -56,7 +56,7 @@ st.markdown("""
 If this page appears dark, it means your browser or system is in dark mode.<br><br>
 To switch to Light Mode:
 <ul>
-    <li>Click the ⋮ icon at the top-right corner</li>
+    <li>Click the <span style="font-size: 2em;">⋮</span> icon at the top-right corner</li>
     <li>Select <b>Settings</b></li>
     <li>Then choose <b>Appearance → Light</b></li>
 </ul>
