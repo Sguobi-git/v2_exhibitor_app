@@ -50,14 +50,14 @@ st.markdown("""
     #     border: 1px solid #e0e0e0 !important;
     # }
     
-    # /* Button styling */
-    # .stButton button {
-    #     background-color: #3498db !important;
-    #     color: white !important;
-    #     border-radius: 10px !important;
-    #     transition: all 0.3s ease !important;
-    #     border: none !important;
-    # }
+    /* Button styling */
+    .stButton button {
+        background-color: #3498db !important;
+        color: white !important;
+        border-radius: 10px !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+    }
     .stButton button:hover {
         background-color: #2980b9 !important;
         transform: translateY(-2px) !important;
