@@ -595,17 +595,19 @@ class Particle {
 
     
     # Navigation buttons
-    col1, col2 = st.columns(2)
+    # col1, col2 = st.columns(2)
+    (col1,) = st.columns(1)
+
     
     with col1:
         if st.button("View Your Orders", use_container_width=True):
             st.session_state.show_confirmation = False
             st.rerun()
     
-    with col2:
-        if st.button("Place Another Order", use_container_width=True):
-            st.session_state.show_confirmation = False
-            st.rerun()
+    # with col2:
+    #     if st.button("Place Another Order", use_container_width=True):
+    #         st.session_state.show_confirmation = False
+    #         st.rerun()
 
 # Sidebar with helpful information
 with st.sidebar:
