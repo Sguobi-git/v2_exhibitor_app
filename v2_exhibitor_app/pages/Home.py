@@ -285,7 +285,7 @@ def show_dashboard():
     
     # Create tabs for different sections
     # tab1, tab2 = st.tabs(["Your Orders", "Place New Order"])
-    tab1 = st.tabs(["Your Orders"])
+    (tab1,) = st.tabs(["Your Orders"])
     
     # Check if we need to reload data
     if st.session_state.get('reload_data', False):
@@ -304,19 +304,20 @@ def show_dashboard():
             for _, order in booth_orders.iterrows():
                 create_card_layout(order)
         else:
-            st.info("You don't have any orders yet. Use the 'Place New Order' tab to get started!")
+            # st.info("You don't have any orders yet. Use the 'Place New Order' tab to get started!")
+            st.info("You don't have any orders yet.")
             
-            # Add a hint for first-time users
-            with st.expander("How to place your first order"):
-                st.write("""
-                1. Click on the 'Place New Order' tab above
-                2. Select the item you need from the dropdown
-                3. Enter the quantity
-                4. Add any special requests in the comments
-                5. Click 'Place Order' to submit your request
+            # # Add a hint for first-time users
+            # with st.expander("How to place your first order"):
+            #     st.write("""
+            #     1. Click on the 'Place New Order' tab above
+            #     2. Select the item you need from the dropdown
+            #     3. Enter the quantity
+            #     4. Add any special requests in the comments
+            #     5. Click 'Place Order' to submit your request
                 
-                Our team will process your order as soon as possible!
-                """)
+            #     Our team will process your order as soon as possible!
+            #     """)
     
     # # Tab 2: New Order
     # with tab2:
