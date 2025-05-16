@@ -298,9 +298,10 @@ def get_exhibitor_name(booth_number):
                 if not exhibitor_match.empty:
                     return exhibitor_match["Exhibitor Name"].iloc[0]
         
-        return f"Booth #{booth_number}"  # Default fallback
+        # return f"Booth #{booth_number}"  # Default fallback
+        return f"Exhibitor {booth_number}"  # Default fallback
     except Exception as e:
-        return f"Booth #{booth_number}"  # Return booth number on error
+        return f"Exhibitor {booth_number}"  # Return booth number on error
 
 # 2. Then modify just the welcome header in show_dashboard function
 def show_dashboard():
