@@ -277,11 +277,39 @@ def load_inventory():
         # Return sample items in case of error
         return ["Chair", "Table", "Booth Carpet", "Lighting", "Display Shelf", "Counter"]
 
-# Main dashboard for logged-in exhibitors
+def get_exhibitor_name(booth_number):
+    try:
+        # Replace with actual sheet ID from your secrets when deploying
+        sheet_id = "1dYeok-Dy_7a03AhPDLV2NNmGbRNoCD3q0zaAHPwxxCE" 
+        
+        # Load exhibitors data - assuming data is in a sheet named "Exhibitors"
+        exhibitors_df = gs_manager.get_data(sheet_id, "Exhibitors")
+        
+        # Process the dataframe: assume first row contains headers
+        if not exhibitors_df.empty:
+            exhibitors_df.columns = exhibitors_df.iloc[0].str.strip()
+            exhibitors_df = exhibitors_df[1:].reset_index(drop=True)
+            
+            # Filter for the booth number
+            if "Booth #" in exhibitors_df.columns and "Exhibitor Name" in exhibitors_df.columns:
+                exhibitors_df["Booth #"] = exhibitors_df["Booth #"].astype(str)
+                exhibitor_match = exhibitors_df[exhibitors_df["Booth #"] == str(booth_number)]
+                
+                if not exhibitor_match.empty:
+                    return exhibitor_match["Exhibitor Name"].iloc[0]
+        
+        return f"Booth #{booth_number}"  # Default fallback
+    except Exception as e:
+        return f"Booth #{booth_number}"  # Return booth number on error
+
+# 2. Then modify just the welcome header in show_dashboard function
 def show_dashboard():
-    # Add a welcome header with booth number
-    st.title(f"Welcome Booth #{st.session_state.booth_number}! 🎪")
-    st.caption(f"Show: {st.session_state.selected_show}")
+    # Get exhibitor name
+    exhibitor_name = get_exhibitor_name(st.session_state.booth_number)
+    
+    # Add a welcome header with exhibitor name instead of booth number
+    st.title(f"Welcome {exhibitor_name}! 🎪")
+    st.caption(f"Booth #{st.session_state.booth_number} | Show: {st.session_state.selected_show}")
     
     # Create tabs for different sections
     # tab1, tab2 = st.tabs(["Your Orders", "Place New Order"])
