@@ -284,7 +284,8 @@ def show_dashboard():
     st.caption(f"Show: {st.session_state.selected_show}")
     
     # Create tabs for different sections
-    tab1, tab2 = st.tabs(["Your Orders", "Place New Order"])
+    # tab1, tab2 = st.tabs(["Your Orders", "Place New Order"])
+    tab1 = st.tabs(["Your Orders"])
     
     # Check if we need to reload data
     if st.session_state.get('reload_data', False):
@@ -317,94 +318,94 @@ def show_dashboard():
                 Our team will process your order as soon as possible!
                 """)
     
-    # Tab 2: New Order
-    with tab2:
-        # Get available items
-        available_items = load_inventory()
+    # # Tab 2: New Order
+    # with tab2:
+    #     # Get available items
+    #     available_items = load_inventory()
         
-        st.subheader("Place a New Order")
+    #     st.subheader("Place a New Order")
         
-        with st.form("new_order_form"):
-            # Create a cleaner layout with columns
-            col1, col2 = st.columns(2)
+    #     with st.form("new_order_form"):
+    #         # Create a cleaner layout with columns
+    #         col1, col2 = st.columns(2)
             
-            with col1:
-                # Item selection with a friendly dropdown
-                item = st.selectbox(
-                    "What item do you need?",
-                    options=[""] + available_items,
-                    format_func=lambda x: f"🔹 {x}" if x else "Select an item...",
-                    help="Select the item you wish to order"
-                )
+    #         with col1:
+    #             # Item selection with a friendly dropdown
+    #             item = st.selectbox(
+    #                 "What item do you need?",
+    #                 options=[""] + available_items,
+    #                 format_func=lambda x: f"🔹 {x}" if x else "Select an item...",
+    #                 help="Select the item you wish to order"
+    #             )
                 
-                # Quantity selection
-                quantity = st.number_input(
-                    "How many do you need?",
-                    min_value=1,
-                    max_value=100,
-                    value=1,
-                    help="Enter the quantity needed"
-                )
+    #             # Quantity selection
+    #             quantity = st.number_input(
+    #                 "How many do you need?",
+    #                 min_value=1,
+    #                 max_value=100,
+    #                 value=1,
+    #                 help="Enter the quantity needed"
+    #             )
             
-            with col2:
-                # Add color selection if applicable
-                color_options = ["White", "Black", "Blue", "Red", "Green", "Burgundy", "Teal", "Other"]
-                color = st.selectbox("Color (if applicable):", color_options)
+    #         with col2:
+    #             # Add color selection if applicable
+    #             color_options = ["White", "Black", "Blue", "Red", "Green", "Burgundy", "Teal", "Other"]
+    #             color = st.selectbox("Color (if applicable):", color_options)
                 
-                # Comments or special requests
-                comments = st.text_area(
-                    "Any special requests?",
-                    max_chars=500,
-                    placeholder="Enter any special requirements or requests here...",
-                    help="Add any additional information about your order"
-                )
+    #             # Comments or special requests
+    #             comments = st.text_area(
+    #                 "Any special requests?",
+    #                 max_chars=500,
+    #                 placeholder="Enter any special requirements or requests here...",
+    #                 help="Add any additional information about your order"
+    #             )
             
-            # Submit button with better styling
-            submit_col1, submit_col2, submit_col3 = st.columns([1, 2, 1])
-            with submit_col2:
-                submitted = st.form_submit_button("Place Order", use_container_width=True)
+    #         # Submit button with better styling
+    #         submit_col1, submit_col2, submit_col3 = st.columns([1, 2, 1])
+    #         with submit_col2:
+    #             submitted = st.form_submit_button("Place Order", use_container_width=True)
             
-            if submitted:
-                if not item:
-                    st.error("Please select an item to order.")
-                else:
-                    # Prepare the order data
-                    order_data = {
-                        'Booth #': st.session_state.booth_number,
-                        'Exhibitor Name': f"Booth {st.session_state.booth_number}",  # Can be updated if we collect exhibitor name
-                        'Section': "Main Floor",  # Default section
-                        'Item': item,
-                        'Color': color,
-                        'Quantity': quantity,
-                        'Status': "In Process",  # Default status for new orders
-                        'Type': "New Order",
-                        'Comments': comments,
-                        'User': f"Exhibitor-{st.session_state.booth_number}"  # Track that this came from an exhibitor
-                    }
+    #         if submitted:
+    #             if not item:
+    #                 st.error("Please select an item to order.")
+    #             else:
+    #                 # Prepare the order data
+    #                 order_data = {
+    #                     'Booth #': st.session_state.booth_number,
+    #                     'Exhibitor Name': f"Booth {st.session_state.booth_number}",  # Can be updated if we collect exhibitor name
+    #                     'Section': "Main Floor",  # Default section
+    #                     'Item': item,
+    #                     'Color': color,
+    #                     'Quantity': quantity,
+    #                     'Status': "In Process",  # Default status for new orders
+    #                     'Type': "New Order",
+    #                     'Comments': comments,
+    #                     'User': f"Exhibitor-{st.session_state.booth_number}"  # Track that this came from an exhibitor
+    #                 }
                     
-                    # Add new order to Google Sheets
-                    try:
-                        from data.direct_sheets_operations import direct_add_order
-                        success = direct_add_order("1dYeok-Dy_7a03AhPDLV2NNmGbRNoCD3q0zaAHPwxxCE", order_data)
+    #                 # Add new order to Google Sheets
+    #                 try:
+    #                     from data.direct_sheets_operations import direct_add_order
+    #                     success = direct_add_order("1dYeok-Dy_7a03AhPDLV2NNmGbRNoCD3q0zaAHPwxxCE", order_data)
                         
-                        if success:
-                            # Store the order data in session state for confirmation screen
-                            st.session_state.last_order = order_data
-                            st.session_state.show_confirmation = True
-                            st.session_state.reload_data = True
+    #                     if success:
+    #                         # Store the order data in session state for confirmation screen
+    #                         st.session_state.last_order = order_data
+    #                         st.session_state.show_confirmation = True
+    #                         st.session_state.reload_data = True
                             
-                            # Redirect to confirmation screen
-                            st.rerun()
-                        else:
-                            st.error("There was an error submitting your order. Please try again.")
-                    except Exception as e:
-                        st.error(f"Error: {e}")
-                        st.info("For testing purposes, we'll simulate a successful order.")
+    #                         # Redirect to confirmation screen
+    #                         st.rerun()
+    #                     else:
+    #                         st.error("There was an error submitting your order. Please try again.")
+    #                 except Exception as e:
+    #                     st.error(f"Error: {e}")
+    #                     st.info("For testing purposes, we'll simulate a successful order.")
                         
-                        # For demo without actual Google Sheets
-                        st.session_state.last_order = order_data
-                        st.session_state.show_confirmation = True
-                        st.rerun()
+    #                     # For demo without actual Google Sheets
+    #                     st.session_state.last_order = order_data
+    #                     st.session_state.show_confirmation = True
+    #                     st.rerun()
 
 # Confirmation screen with animation
 def show_confirmation():
