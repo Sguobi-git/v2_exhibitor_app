@@ -307,7 +307,7 @@ def load_inventory():
 def get_exhibitor_name(booth_number):
     try:
         sheet_id = "1dYeok-Dy_7a03AhPDLV2NNmGbRNoCD3q0zaAHPwxxCE" 
-        exhibitors_df = gs_manager.get_data(sheet_id, "Exhibitor Name ")
+        exhibitors_df = gs_manager.get_data(sheet_id, "Exhibitor Name")
         
         if not exhibitors_df.empty:
             # Strip whitespace from column headers
@@ -317,14 +317,14 @@ def get_exhibitor_name(booth_number):
             # Clean whitespace from all string columns
             exhibitors_df = exhibitors_df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
             
-            if "Booth #" in exhibitors_df.columns and "Exhibitor Name " in exhibitors_df.columns:
+            if "Booth #" in exhibitors_df.columns and "Exhibitor Name" in exhibitors_df.columns:
                 exhibitors_df["Booth #"] = exhibitors_df["Booth #"].astype(str)
                 booth_number = str(booth_number).strip()
                 
                 exhibitor_match = exhibitors_df[exhibitors_df["Booth #"] == booth_number]
                 
                 if not exhibitor_match.empty:
-                    return exhibitor_match["Exhibitor Name "].iloc[0]
+                    return exhibitor_match["Exhibitor Name"].iloc[0]
         
         return f"Exhibitor {booth_number}"  # Fallback
     except Exception as e:
