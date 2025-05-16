@@ -702,10 +702,10 @@ class Particle {
             st.session_state.show_confirmation = False
             st.rerun()
     
-    # with col2:
-    #     if st.button("Place Another Order", use_container_width=True):
-    #         st.session_state.show_confirmation = False
-    #         st.rerun()
+    with col2:
+        if st.button("Place Another Order", use_container_width=True):
+            st.session_state.show_confirmation = False
+            st.rerun()
 
 # Sidebar with helpful information
 with st.sidebar:
