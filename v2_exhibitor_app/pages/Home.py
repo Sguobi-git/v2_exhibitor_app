@@ -306,29 +306,31 @@ def load_inventory():
 
 def get_exhibitor_name(booth_number):
     try:
-        sheet_id = "1dYeok-Dy_7a03AhPDLV2NNmGbRNoCD3q0zaAHPwxxCE" 
-        exhibitors_df = gs_manager.get_data(sheet_id, "Exhibitor Name")
+        sheet_id = "1dYeok-Dy_7a03AhPDLV2NNmGbRNoCD3q0zaAHPwxxCE"
         
-        if not exhibitors_df.empty:
-            # Strip whitespace from column headers
-            exhibitors_df.columns = exhibitors_df.iloc[0].str.strip()
-            exhibitors_df = exhibitors_df[1:].reset_index(drop=True)
+        # Load full sheet and start from row 6 (index 5 in 0-based indexing)
+        raw_df = gs_manager.get_data(sheet_id, "Orders")
+        exhibitors_df = raw_df.iloc[5:].reset_index(drop=True)
 
-            # Clean whitespace from all string columns
-            exhibitors_df = exhibitors_df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-            
-            if "Booth #" in exhibitors_df.columns and "Exhibitor Name" in exhibitors_df.columns:
-                exhibitors_df["Booth #"] = exhibitors_df["Booth #"].astype(str)
-                booth_number = str(booth_number).strip()
-                
-                exhibitor_match = exhibitors_df[exhibitors_df["Booth #"] == booth_number]
-                
-                if not exhibitor_match.empty:
-                    return exhibitor_match["Exhibitor Name"].iloc[0]
-        
-        return f"Exhibitor {booth_number}"  # Fallback
+        # Use the first row of this slice as header
+        exhibitors_df.columns = exhibitors_df.iloc[0].astype(str).str.strip()
+        exhibitors_df = exhibitors_df[1:].reset_index(drop=True)
+
+        # Clean strings
+        exhibitors_df = exhibitors_df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+
+        # Safe access
+        if "Booth #" in exhibitors_df.columns and "Exhibitor Name" in exhibitors_df.columns:
+            booth_number = str(booth_number).strip()
+            exhibitors_df["Booth #"] = exhibitors_df["Booth #"].astype(str).str.strip()
+
+            match = exhibitors_df[exhibitors_df["Booth #"] == booth_number]
+            if not match.empty:
+                return match["Exhibitor Name"].iloc[0]
+
+        return f"Exhibitor {booth_number}"  # fallback
     except Exception as e:
-        return f"Exhibitor {booth_number}"  # On error
+        return f"Exhibitor {booth_number}"  # on error
 
 
 # 2. Then modify just the welcome header in show_dashboard function
