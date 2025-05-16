@@ -65,6 +65,6 @@ To switch to Light Mode:
 
 # ---------- Button to continue ----------
 st.markdown(" ")
-if st.button("✅ I did it — Continue to the app"):
+if st.button("✅ Continue to the app"):
     st.switch_page("pages/Home.py")  # Change this to your actual homepage file if needed
     
