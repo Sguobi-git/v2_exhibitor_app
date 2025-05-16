@@ -304,33 +304,72 @@ def load_inventory():
 #         return f"Exhibitor {booth_number}"  # Return booth number on error
 
 
+
+
+
+
+# def get_exhibitor_name(booth_number):
+#     try:
+#         sheet_id = "1dYeok-Dy_7a03AhPDLV2NNmGbRNoCD3q0zaAHPwxxCE"
+        
+#         # Load full sheet and start from row 6 (index 5 in 0-based indexing)
+#         raw_df = gs_manager.get_data(sheet_id, "Orders")
+#         exhibitors_df = raw_df.iloc[5:].reset_index(drop=True)
+
+#         # Use the first row of this slice as header
+#         exhibitors_df.columns = exhibitors_df.iloc[0].astype(str).str.strip()
+#         exhibitors_df = exhibitors_df[1:].reset_index(drop=True)
+
+#         # Clean strings
+#         exhibitors_df = exhibitors_df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
+
+#         # Safe access
+#         if "Booth #" in exhibitors_df.columns and "Exhibitor Name " in exhibitors_df.columns:
+#             booth_number = str(booth_number).strip()
+#             exhibitors_df["Booth #"] = exhibitors_df["Booth #"].astype(str).str.strip()
+
+#             match = exhibitors_df[exhibitors_df["Booth #"] == booth_number]
+#             if not match.empty:
+#                 return match["Exhibitor Name "].iloc[0]
+
+#         return f"Exhibitor {booth_number}"  # fallback
+#     except Exception as e:
+#         return f"Exhibitor {booth_number}"  # on error
+
 def get_exhibitor_name(booth_number):
     try:
         sheet_id = "1dYeok-Dy_7a03AhPDLV2NNmGbRNoCD3q0zaAHPwxxCE"
         
-        # Load full sheet and start from row 6 (index 5 in 0-based indexing)
-        raw_df = gs_manager.get_data(sheet_id, "Orders")
-        exhibitors_df = raw_df.iloc[5:].reset_index(drop=True)
-
-        # Use the first row of this slice as header
-        exhibitors_df.columns = exhibitors_df.iloc[0].astype(str).str.strip()
-        exhibitors_df = exhibitors_df[1:].reset_index(drop=True)
-
-        # Clean strings
-        exhibitors_df = exhibitors_df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
-
-        # Safe access
-        if "Booth #" in exhibitors_df.columns and "Exhibitor Name " in exhibitors_df.columns:
-            booth_number = str(booth_number).strip()
-            exhibitors_df["Booth #"] = exhibitors_df["Booth #"].astype(str).str.strip()
-
-            match = exhibitors_df[exhibitors_df["Booth #"] == booth_number]
-            if not match.empty:
-                return match["Exhibitor Name "].iloc[0]
-
-        return f"Exhibitor {booth_number}"  # fallback
+        # Load Orders sheet
+        orders_df = gs_manager.get_data(sheet_id, "Orders")
+        
+        # Convert booth_number to string for comparison
+        booth_number = str(booth_number).strip()
+        
+        # Based on your sample data, we need to find rows where:
+        # - Column 1 (index 0) contains the booth number
+        # - Column 3 (index 2) contains the exhibitor name
+        
+        # First, find the row index where the exhibitor name header is located
+        header_row = -1
+        for i, row in orders_df.iterrows():
+            if "Exhibitor Name" in str(row):
+                header_row = i
+                break
+        
+        if header_row >= 0:
+            # Start searching from the row after the header
+            for i in range(header_row + 1, len(orders_df)):
+                current_booth = str(orders_df.iloc[i, 0]).strip() if pd.notna(orders_df.iloc[i, 0]) else ""
+                if current_booth == booth_number and pd.notna(orders_df.iloc[i, 2]):
+                    return str(orders_df.iloc[i, 2]).strip()
+        
+        # If no match found, return default
+        return f"Exhibitor {booth_number}"
+        
     except Exception as e:
-        return f"Exhibitor {booth_number}"  # on error
+        # On error, return the default
+        return f"Exhibitor {booth_number}"
 
 
 # 2. Then modify just the welcome header in show_dashboard function
