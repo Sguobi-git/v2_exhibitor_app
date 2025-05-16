@@ -277,31 +277,59 @@ def load_inventory():
         # Return sample items in case of error
         return ["Chair", "Table", "Booth Carpet", "Lighting", "Display Shelf", "Counter"]
 
+# def get_exhibitor_name(booth_number):
+#     try:
+#         # Replace with actual sheet ID from your secrets when deploying
+#         sheet_id = "1dYeok-Dy_7a03AhPDLV2NNmGbRNoCD3q0zaAHPwxxCE" 
+        
+#         # Load exhibitors data - assuming data is in a sheet named "Exhibitors"
+#         exhibitors_df = gs_manager.get_data(sheet_id, "Exhibitor Name ")
+        
+#         # Process the dataframe: assume first row contains headers
+#         if not exhibitors_df.empty:
+#             exhibitors_df.columns = exhibitors_df.iloc[0].str.strip()
+#             exhibitors_df = exhibitors_df[1:].reset_index(drop=True)
+            
+#             # Filter for the booth number
+#             if "Booth #" in exhibitors_df.columns and "Exhibitor Name" in exhibitors_df.columns:
+#                 exhibitors_df["Booth #"] = exhibitors_df["Booth #"].astype(str)
+#                 exhibitor_match = exhibitors_df[exhibitors_df["Booth #"] == str(booth_number)]
+                
+#                 if not exhibitor_match.empty:
+#                     return exhibitor_match["Exhibitor Name "].iloc[0]
+        
+#         # return f"Booth #{booth_number}"  # Default fallback
+#         return f"Exhibitor {booth_number}"  # Default fallback
+#     except Exception as e:
+#         return f"Exhibitor {booth_number}"  # Return booth number on error
+
+
 def get_exhibitor_name(booth_number):
     try:
-        # Replace with actual sheet ID from your secrets when deploying
         sheet_id = "1dYeok-Dy_7a03AhPDLV2NNmGbRNoCD3q0zaAHPwxxCE" 
-        
-        # Load exhibitors data - assuming data is in a sheet named "Exhibitors"
         exhibitors_df = gs_manager.get_data(sheet_id, "Exhibitor Name ")
         
-        # Process the dataframe: assume first row contains headers
         if not exhibitors_df.empty:
+            # Strip whitespace from column headers
             exhibitors_df.columns = exhibitors_df.iloc[0].str.strip()
             exhibitors_df = exhibitors_df[1:].reset_index(drop=True)
+
+            # Clean whitespace from all string columns
+            exhibitors_df = exhibitors_df.applymap(lambda x: x.strip() if isinstance(x, str) else x)
             
-            # Filter for the booth number
             if "Booth #" in exhibitors_df.columns and "Exhibitor Name" in exhibitors_df.columns:
                 exhibitors_df["Booth #"] = exhibitors_df["Booth #"].astype(str)
-                exhibitor_match = exhibitors_df[exhibitors_df["Booth #"] == str(booth_number)]
+                booth_number = str(booth_number).strip()
+                
+                exhibitor_match = exhibitors_df[exhibitors_df["Booth #"] == booth_number]
                 
                 if not exhibitor_match.empty:
-                    return exhibitor_match["Exhibitor Name "].iloc[0]
+                    return exhibitor_match["Exhibitor Name"].iloc[0]
         
-        # return f"Booth #{booth_number}"  # Default fallback
-        return f"Exhibitor {booth_number}"  # Default fallback
+        return f"Exhibitor {booth_number}"  # Fallback
     except Exception as e:
-        return f"Exhibitor {booth_number}"  # Return booth number on error
+        return f"Exhibitor {booth_number}"  # On error
+
 
 # 2. Then modify just the welcome header in show_dashboard function
 def show_dashboard():
