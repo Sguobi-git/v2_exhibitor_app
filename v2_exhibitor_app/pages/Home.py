@@ -283,7 +283,7 @@ def get_exhibitor_name(booth_number):
         sheet_id = "1dYeok-Dy_7a03AhPDLV2NNmGbRNoCD3q0zaAHPwxxCE" 
         
         # Load exhibitors data - assuming data is in a sheet named "Exhibitors"
-        exhibitors_df = gs_manager.get_data(sheet_id, "Exhibitors")
+        exhibitors_df = gs_manager.get_data(sheet_id, "Exhibitor Name ")
         
         # Process the dataframe: assume first row contains headers
         if not exhibitors_df.empty:
