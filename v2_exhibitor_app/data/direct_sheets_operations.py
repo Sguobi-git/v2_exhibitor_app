@@ -11,10 +11,15 @@ def direct_add_order(sheet_id, order_data):
     try:
         # Approche directe qui fonctionne
         scope = ["https://www.googleapis.com/auth/spreadsheets"]
-        creds = Credentials.from_service_account_file(
-            r"S:\Work (Souhail)\Archive\\new_cloud_key\gestion-exposants-32fb1e27b63a.json", 
+        # creds = Credentials.from_service_account_file(
+        #     r"S:\Work (Souhail)\Archive\\new_cloud_key\gestion-exposants-32fb1e27b63a.json", 
+        #     scopes=scope
+        # )
+        creds = Credentials.from_service_account_info(
+            st.secrets["gcp_service_account"], 
             scopes=scope
         )
+        
         gc = gspread.authorize(creds)
         sh = gc.open_by_key(sheet_id)
         orders_sheet = sh.worksheet("Orders")
@@ -78,8 +83,12 @@ def direct_delete_order(sheet_id, booth_num, item_name, color, section):
     try:
         # Configurer l'accès à l'API
         scope = ["https://www.googleapis.com/auth/spreadsheets"]
-        creds = Credentials.from_service_account_file(
-            # "S:\\Work (Souhail)\\Archive\\Dashboard Web\\gestion-exposants-eb6f7767a2ad.json", 
+        # creds = Credentials.from_service_account_file(
+        #     # "S:\\Work (Souhail)\\Archive\\Dashboard Web\\gestion-exposants-eb6f7767a2ad.json", 
+        #     scopes=scope
+        # )
+        creds = Credentials.from_service_account_info(
+            st.secrets["gcp_service_account"], 
             scopes=scope
         )
         gc = gspread.authorize(creds)
