@@ -448,7 +448,7 @@ def show_dashboard():
             
             with col2:
                 # Add color selection if applicable
-                color_options = ["White", "Black", "Blue", "Red", "Green", "Burgundy", "Teal", "Other"]
+                color_options = ["White ", "Black ", "Blue", "Red ", "Gray" "Green ", "Burgundy ", "Teal", "Other"]
                 color = st.selectbox("Color (if applicable):", color_options)
                 
                 # Comments or special requests
